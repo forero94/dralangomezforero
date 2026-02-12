@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Alan Govinda Gómez Forero | Médico Genetista</title>
+    <meta name="description"
+        content="Médico residente de Genética Médica (CNGM). Diagnóstico de Enfermedades Poco Frecuentes, Asesoramiento Genético y Medicina de Precisión.">
+
+    <!-- Tailwind CSS (CDN para desarrollo rápido) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter & Merriweather -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Merriweather', serif;
+        }
+    </style>
+
+    <!-- Schema.org JSON-LD (SEO Médico) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Physician",
+          "@id": "https://alangomezforero.com.ar/#doctor",
+          "name": "Dr. Alan Govinda Gómez Forero",
+          "url": "https://alangomezforero.com.ar",
+          "image": "https://alangomezforero.com.ar/assets/profile.jpg",
+          "medicalSpecialty": "Medical Genetics",
+          "description": "Médico residente de Genética Médica en el Centro Nacional de Genética Médica (CNGM). Especialista en diagnóstico de EPOF y asesoramiento genético.",
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Universidad de Buenos Aires"
+          },
+          "knowsAbout": ["Exoma", "Enfermedades Poco Frecuentes", "Asesoramiento Genético", "Bioética"],
+          "sameAs": [
+            "https://www.linkedin.com/in/alangomezforero/",
+            "https://www.youtube.com/watch?v=XHOmBV4js_E"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://alangomezforero.com.ar/#website",
+          "url": "https://alangomezforero.com.ar",
+          "name": "Dr. Alan Gómez Forero | Genética Médica",
+          "author": { "@id": "https://alangomezforero.com.ar/#doctor" }
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-slate-900">Dr. Alan Gómez</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#sobre-mi" class="text-slate-600 hover:text-blue-600 transition">Sobre Mí</a>
+                    <a href="#servicios" class="text-slate-600 hover:text-blue-600 transition">Qué Hago</a>
+                    <a href="#contacto" class="text-slate-600 hover:text-blue-600 transition">Contacto</a>
+                    <a href="https://www.linkedin.com/in/alangomezforero/" target="_blank"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-white">
+        <div class="max-w-5xl mx-auto px-4 py-20 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
+                <span
+                    class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full uppercase tracking-wide font-semibold mb-4">Genética
+                    Médica & Medicina de Precisión</span>
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-6">
+                    Traducir el Genoma en <span class="text-blue-600">Salud</span>.
+                </h1>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    Médico residente del Centro Nacional de Genética Médica (CNGM).
+                    Ayudo a pacientes y familias a navegar el complejo camino del diagnóstico genético con rigor
+                    científico y empatía.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#contacto"
+                        class="bg-slate-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-slate-800 transition text-center">
+                        Contactar
+                    </a>
+                    <a href="#sobre-mi"
+                        class="border border-slate-300 text-slate-700 px-6 py-3 rounded-lg font-medium hover:bg-slate-50 transition text-center">
+                        Conocer Más
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center md:justify-end">
+                <!-- Foto Perfil -->
+                <div
+                    class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                    <img src="profile-nanopore.png" alt="Dr. Alan Gómez Forero - Genética y Bioinformática"
+                        class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sobre Mí (Bio Maestra) -->
+    <section id="sobre-mi" class="py-20 bg-slate-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-900">Sobre Mí</h2>
+                <div class="w-16 h-1 bg-blue-600 mx-auto mt-4"></div>
+            </div>
+
+            <div class="prose prose-lg text-slate-600 mx-auto text-center mb-10">
+                <!-- Foto Acción (Bioinformática) -->
+                <img src="action-nanopore.jpg" alt="Análisis Bioinformático Nanopore"
+                    class="rounded-xl shadow-md mx-auto mb-8 w-full md:w-2/3">
+
+                <p>
+                    Soy <strong>Médico egresado de la Universidad de Buenos Aires (UBA)</strong>. Actualmente me
+                    desempeño como Residente de Genética Médica en el <strong>Centro Nacional de Genética Médica
+                        (CNGM)</strong>.
+                </p>
+                <p>
+                    Mi enfoque combina la precisión diagnóstica con el asesoramiento. Me especializo en traducir la
+                    "caja negra" del genoma en información accionable, útil para la toma de decisiones clínicas y
+                    reproductivas.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-8 my-10 not-prose">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">🧬 Áreas de Práctica</h3>
+                        <ul class="space-y-2 text-slate-600">
+                            <li>• Diagnóstico de Enfermedades Poco Frecuentes (EPOF)</li>
+                            <li>• Interpretación de variantes (ACMG)</li>
+                            <li>• Estudios moleculares (Exoma/Genoma)</li>
+                            <li>• Asesoramiento Preconcepcional</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">🎓 Formación & Intereses</h3>
+                        <ul class="space-y-2 text-slate-600">
+                            <li>• Medicina UBA (Diploma Honor)</li>
+                            <li>• Residencia CNGM (En curso)</li>
+                            <li>• Neurogenética & Oncogenética</li>
+                            <li>• 🥋 Practicante de BJJ (Disciplina y Resiliencia)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Autoridad (Video) -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-slate-900 mb-8">Divulgación y Docencia</h2>
+            <p class="text-slate-600 mb-10 max-w-2xl mx-auto">
+                Creo en el poder de la educación médica. Aquí presento una de mis clases sobre neuroanatomía funcional.
+            </p>
+
+            <div class="relative pb-[56.25%] h-0 rounded-xl overflow-hidden shadow-lg bg-black">
+                <!-- Reemplazar ID del video si es necesario -->
+                <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/XHOmBV4js_E"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contacto -->
+    <footer id="contacto" class="bg-slate-900 text-slate-300 py-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-white mb-6">Contacto Profesional</h2>
+            <p class="mb-8">Para consultas académicas, derivaciones o colaboraciones.</p>
+
+            <a href="mailto:forero.94@gmail.com"
+                class="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition mb-6">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                    </path>
+                </svg>
+                forero.94@gmail.com
+            </a>
+
+            <div class="mt-8 pt-8 border-t border-slate-800 text-sm opacity-60">
+                <p>&copy; 2026 Dr. Alan Govinda Gómez Forero. Todos los derechos reservados.</p>
+                <p class="mt-2">Buenos Aires, Argentina 🇦🇷</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
