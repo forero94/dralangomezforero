@@ -6,45 +6,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dr. Alan Govinda Gómez Forero | Médico Genetista</title>
     <meta name="description"
-        content="Médico residente de Genética Médica (CNGM). Diagnóstico de Enfermedades Poco Frecuentes, Asesoramiento Genético y Medicina de Precisión.">
+        content="Residente de Genética Médica (CNGM). Diagnóstico de EPOF, Asesoramiento Genético y Bioinformática Clínica.">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://alangomezforero.com.ar/">
     <meta property="og:title" content="Dr. Alan Gómez Forero | Médico Genetista">
     <meta property="og:description"
-        content="Especialista en Diagnóstico de EPOF, Asesoramiento Genético y Bioinformática Clínica. Turnos y consultas.">
+        content="Especialista en Diagnóstico de EPOF, Asesoramiento Genético y Bioinformática Clínica.">
     <meta property="og:image" content="https://alangomezforero.com.ar/profile-nanopore.png">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://alangomezforero.com.ar/">
-    <meta property="twitter:title" content="Dr. Alan Gómez Forero | Médico Genetista">
-    <meta property="twitter:description"
-        content="Especialista en Diagnóstico de EPOF, Asesoramiento Genético y Bioinformática Clínica.">
-    <meta property="twitter:image" content="https://alangomezforero.com.ar/profile-nanopore.png">
-
-    <!-- Tailwind CSS (CDN para desarrollo rápido) -->
+    <!-- Tailwind CSS (Utility) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts: Inter & Merriweather -->
+    <!-- Google Fonts: Playfair Display (Academic) & Lora (Serious Body) -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@700;900&display=swap"
         rel="stylesheet">
 
     <style>
+        :root {
+            --medical-blue: #0f172a;
+            /* Slate 900 */
+            --accent-blue: #2563eb;
+            /* Blue 600 */
+            --paper-white: #fcfcfc;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Lora', serif;
+            background-color: var(--paper-white);
+            color: #1e293b;
+            /* Slate 800 */
         }
 
         h1,
         h2,
         h3 {
-            font-family: 'Merriweather', serif;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: -0.02em;
+        }
+
+        .border-premium {
+            border-color: rgba(15, 23, 42, 0.1);
+        }
+
+        .cv-section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .cv-section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-blue);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        /* Subtle Fade In */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.8s ease-out forwards;
         }
     </style>
 
-    <!-- Schema.org JSON-LD (SEO Médico) -->
+    <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -54,52 +99,16 @@
           "@id": "https://alangomezforero.com.ar/#doctor",
           "name": "Dr. Alan Govinda Gómez Forero",
           "url": "https://alangomezforero.com.ar",
-          "image": "https://alangomezforero.com.ar/assets/profile.jpg",
+          "image": "https://alangomezforero.com.ar/profile-nanopore.png",
           "medicalSpecialty": "Medical Genetics",
-          "description": "Médico residente de Genética Médica en el Centro Nacional de Genética Médica (CNGM). Especialista en diagnóstico de EPOF y asesoramiento genético.",
+          "description": "Médico residente de Genética Médica en el Centro Nacional de Genética Médica (CNGM).",
           "alumniOf": {
             "@type": "CollegeOrUniversity",
             "name": "Universidad de Buenos Aires"
           },
-          "knowsAbout": ["Exoma", "Enfermedades Poco Frecuentes", "Asesoramiento Genético", "Bioética"],
+          "knowsAbout": ["Exoma", "Enfermedades Poco Frecuentes", "Asesoramiento Genético"],
           "sameAs": [
             "https://www.linkedin.com/in/alangomezforero/"
-          ]
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://alangomezforero.com.ar/#website",
-          "url": "https://alangomezforero.com.ar",
-          "name": "Dr. Alan Gómez Forero | Genética Médica",
-          "author": { "@id": "https://alangomezforero.com.ar/#doctor" }
-        },
-        {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "¿Qué es el asesoramiento genético pre-test?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Es una consulta fundamental donde evaluamos tu historia clínica y familiar para determinar qué estudio es el más adecuado para vos, explicando los alcances y limitaciones de cada tecnología."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Cuánto tiempo tarda un estudio de Exoma?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Los tiempos dependen de la complejidad del análisis bioinformático, pero generalmente oscilan entre 45 y 90 días para un informe médico completo y validado."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Realizás consultas de segunda opinión?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Sí, me especializo en la re-interpretación de variantes de significado incierto (VUS) y en coordinar diagnósticos estancados mediante herramientas genómicas avanzadas."
-              }
-            }
           ]
         }
       ]
@@ -107,198 +116,164 @@
     </script>
 </head>
 
-<body class="bg-slate-50 text-slate-800">
+<body class="selection:bg-blue-100">
 
     <!-- Navbar -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-xl font-bold text-slate-900">Dr. Alan Gómez</span>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#sobre-mi" class="text-slate-600 hover:text-blue-600 transition">Sobre Mí</a>
-                    <a href="#servicios" class="text-slate-600 hover:text-blue-600 transition">Qué Hago</a>
-                    <a href="#contacto" class="text-slate-600 hover:text-blue-600 transition">Contacto</a>
-                    <a href="https://www.linkedin.com/in/alangomezforero/" target="_blank"
-                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">LinkedIn</a>
-                </div>
+    <nav class="bg-white/80 backdrop-blur-md border-b border-premium sticky top-0 z-50">
+        <div
+            class="max-w-4xl mx-auto px-6 h-20 flex justify-between items-center text-sm uppercase tracking-widest font-semibold">
+            <span class="text-slate-900">Dr. Alan Gómez Forero</span>
+            <div class="space-x-8 hidden md:block">
+                <a href="#perfil" class="hover:text-blue-600 transition">Perfil</a>
+                <a href="#experiencia" class="hover:text-blue-600 transition">Experiencia</a>
+                <a href="#servicios" class="hover:text-blue-600 transition">Especialidades</a>
+                <a href="#contacto" class="hover:text-blue-600 transition text-blue-600">Contacto</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="bg-white">
-        <div class="max-w-5xl mx-auto px-4 py-20 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
-                <span
-                    class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full uppercase tracking-wide font-semibold mb-4">Genética
-                    Médica & Medicina de Precisión</span>
-                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-6">
-                    Traducir el Genoma en <span class="text-blue-600">Salud</span>.
+    <!-- Header / Hero (Serious Academic Style) -->
+    <header class="hero-gradient py-24 border-b border-premium">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-2/3 animate-fade text-center md:text-left">
+                <p class="text-blue-600 font-semibold tracking-widest uppercase text-xs mb-4">Currículum Profesional</p>
+                <h1 class="text-5xl md:text-6xl text-slate-900 mb-6 font-black">Genética Médica & Medicina de Precisión
                 </h1>
-                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
-                    Médico residente del Centro Nacional de Genética Médica (CNGM).
-                    Ayudo a pacientes y familias a navegar el complejo camino del diagnóstico genético con rigor
-                    científico y empatía.
+                <p class="text-xl text-slate-600 leading-relaxed max-w-xl italic">
+                    "Interpretar el lenguaje del genoma para transformar la práctica clínica."
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="#contacto"
-                        class="bg-slate-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-slate-800 transition text-center">
-                        Contactar
-                    </a>
-                    <a href="#sobre-mi"
-                        class="border border-slate-300 text-slate-700 px-6 py-3 rounded-lg font-medium hover:bg-slate-50 transition text-center">
-                        Conocer Más
-                    </a>
-                </div>
             </div>
-            <div class="md:w-1/2 flex justify-center md:justify-end">
-                <!-- Foto Perfil -->
-                <div
-                    class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl">
-                    <img src="action-nanopore.jpg" alt="Dr. Alan Gómez Forero - Análisis Bioinformático Nanopore"
-                        class="w-full h-full object-cover">
-                </div>
+            <div class="md:w-1/3 flex justify-center">
+                <img src="action-nanopore.jpg" alt="Dr. Alan Gómez"
+                    class="w-64 h-64 object-cover rounded-xl shadow-2xl grayscale hover:grayscale-0 transition duration-500 border-4 border-white">
             </div>
         </div>
     </header>
 
-    <!-- Sobre Mí (Bio Maestra) -->
-    <section id="sobre-mi" class="py-20 bg-slate-50">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-slate-900">Sobre Mí</h2>
-                <div class="w-16 h-1 bg-blue-600 mx-auto mt-4"></div>
-            </div>
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-6 py-24 space-y-32">
 
-            <div class="prose prose-lg text-slate-600 mx-auto text-center mb-10">
-                <!-- Foto Perfil -->
-                <img src="profile-nanopore.png" alt="Dr. Alan Gómez Forero - Genética Médica"
-                    class="rounded-xl shadow-md mx-auto mb-8 w-full md:w-2/3">
-
-                <p>
-                    Soy <strong>Médico egresado de la Universidad de Buenos Aires (UBA)</strong>. Actualmente me
-                    desempeño como Residente de Genética Médica en el <strong>Centro Nacional de Genética Médica
-                        (CNGM)</strong>.
-                </p>
-                <p>
-                    Mi enfoque combina la precisión diagnóstica con el asesoramiento. Me especializo en traducir la
-                    "caja negra" del genoma en información accionable, útil para la toma de decisiones clínicas y
-                    reproductivas.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Servicios (SEO Transaccional) -->
-    <section id="servicios" class="py-20 bg-white">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-slate-900">Servicios y Especialidades</h2>
-                <p class="mt-4 text-slate-600 max-w-2xl mx-auto">Asistencia integral en el diagnóstico genético para
-                    pacientes, familias e instituciones.</p>
-                <div class="w-16 h-1 bg-blue-600 mx-auto mt-4"></div>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Servicio 1 -->
-                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-lg transition">
-                    <div
-                        class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
-                        🧬</div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-4">Diagnóstico de EPOF</h3>
-                    <p class="text-slate-600 mb-6 text-sm leading-relaxed">Detección de Enfermedades Poco Frecuentes.
-                        Coordinación e interpretación de estudios moleculares (Exoma, Paneles).</p>
-                    <ul class="text-xs text-slate-500 space-y-2">
-                        <li>• Dismorfología clínica</li>
-                        <li>• Interpretación de variantes (ACMG)</li>
-                        <li>• Segundas opiniones especializadas</li>
-                    </ul>
+        <!-- Perfil Profesional -->
+        <section id="perfil" class="animate-fade">
+            <h2 class="text-3xl text-slate-900 cv-section-title uppercase tracking-tight">Perfil Profesional</h2>
+            <div class="grid md:grid-cols-5 gap-12 items-start">
+                <div class="md:col-span-3 prose prose-slate leading-relaxed">
+                    <p class="text-lg">
+                        Médico egresado de la <strong>Universidad de Buenos Aires (UBA)</strong> con formación
+                        focalizada en el diagnóstico de Enfermedades Poco Frecuentes (EPOF) y el asesoramiento genético
+                        avanzado.
+                    </p>
+                    <p>
+                        Actualmente me desempeño como Residente en el <strong>Centro Nacional de Genética Médica
+                            (CNGM)</strong>, integrando herramientas bioinformáticas y tecnologías de secuenciación de
+                        tercera generación (Nanopore) para la resolución de casos clínicos de alta complejidad.
+                    </p>
                 </div>
-
-                <!-- Servicio 2 -->
-                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-lg transition">
-                    <div
-                        class="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
-                        👨‍👩‍👧</div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-4">Asesoramiento Genético</h3>
-                    <p class="text-slate-600 mb-6 text-sm leading-relaxed">Orientación experta para parejas y familias
-                        en la toma de decisiones informadas sobre su salud reproductiva.</p>
-                    <ul class="text-xs text-slate-500 space-y-2">
-                        <li>• Screening pre-concepcional</li>
-                        <li>• Riesgo de herencia y recurrencia</li>
-                        <li>• Asesoramiento pre y post-estudio</li>
-                    </ul>
-                </div>
-
-                <!-- Servicio 3 -->
-                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-lg transition">
-                    <div
-                        class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
-                        💻</div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-4">Bioinformática Clínica</h3>
-                    <p class="text-slate-600 mb-6 text-sm leading-relaxed">Implementación de tecnología genómica de
-                        vanguardia (Nanopore/IA) para diagnósticos de precisión.</p>
-                    <ul class="text-xs text-slate-500 space-y-2">
-                        <li>• Pipelines de análisis de datos</li>
-                        <li>• Implementación de IA en salud</li>
-                        <li>• Desarrollo de workflows diagnósticos</li>
+                <div class="md:col-span-2 bg-slate-50 p-8 rounded-lg border border-premium">
+                    <h3 class="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">Resumen</h3>
+                    <ul class="text-sm space-y-3 text-slate-700">
+                        <li class="flex justify-between"><span>Título:</span> <span class="font-semibold">Médico
+                                (UBA)</span></li>
+                        <li class="flex justify-between"><span>Cargo:</span> <span
+                                class="font-semibold italic text-blue-600">Residente CNGM</span></li>
+                        <li class="flex justify-between"><span>Foco:</span> <span
+                                class="font-semibold text-right">Diagnóstico & Bioinformática</span></li>
                     </ul>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FAQ Section (SEO & Trust) -->
-    <section class="py-20 bg-slate-50">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-slate-900">Preguntas Frecuentes</h2>
-                <div class="w-16 h-1 bg-blue-600 mx-auto mt-4"></div>
+        <!-- Experiencia & Formación (CV Style) -->
+        <section id="experiencia" class="animate-fade" style="animation-delay: 0.2s;">
+            <h2 class="text-3xl text-slate-900 cv-section-title uppercase tracking-tight">Trayectoria Institucional</h2>
+            <div class="space-y-12">
+                <div class="flex gap-8 group">
+                    <div class="text-sm text-slate-400 font-bold pt-1 min-w-[100px]">2024 - <span
+                            class="text-blue-600">Presente</span></div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Residencia de Genética Médica</h3>
+                        <p class="text-slate-500 mb-4 font-semibold italic">Centro Nacional de Genética Médica (CNGM)
+                        </p>
+                        <p class="text-sm text-slate-600 leading-relaxed">Atención de pacientes con sospecha de
+                            patología de base genética, interpretación clínica de exomas y asesoramiento a familias.</p>
+                    </div>
+                </div>
+                <div class="flex gap-8 group">
+                    <div class="text-sm text-slate-400 font-bold pt-1 min-w-[100px]">2013 - 2021</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Grado en Medicina</h3>
+                        <p class="text-slate-500 mb-4 font-semibold italic">Facultad de Medicina, Universidad de Buenos
+                            Aires</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">Formación médica de base en una de las
+                            instituciones líderes de Latinoamérica.</p>
+                    </div>
+                </div>
             </div>
+        </section>
 
+        <!-- Especialidades (Services refined as Specialities) -->
+        <section id="servicios" class="animate-fade" style="animation-delay: 0.4s;">
+            <h2 class="text-3xl text-slate-900 cv-section-title uppercase tracking-tight">Áreas de Especialización</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="p-8 bg-white border border-premium rounded-xl shadow-sm hover:border-blue-200 transition">
+                    <h3
+                        class="text-xl font-bold text-slate-900 mb-3 underline decoration-blue-500 decoration-2 underline-offset-4">
+                        Diagnóstico Clínico de EPOF</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Detección y seguimiento de enfermedades raras
+                        mediante evaluación clínica detallada y coordinación de estudios moleculares de última
+                        generación.</p>
+                </div>
+                <div class="p-8 bg-white border border-premium rounded-xl shadow-sm hover:border-blue-200 transition">
+                    <h3
+                        class="text-xl font-bold text-slate-900 mb-3 underline decoration-blue-500 decoration-2 underline-offset-4">
+                        Bioinformática Aplicada</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Implementación de pipelines para análisis de
+                        secuenciación masiva (NGS y Nanopore) y medicina de precisión personalizada.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ (Minimalist Style) -->
+        <section id="preguntas" class="animate-fade" style="animation-delay: 0.6s;">
+            <h2 class="text-3xl text-slate-900 cv-section-title uppercase tracking-tight">Preguntas Frecuentes</h2>
             <div class="space-y-6">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                    <h3 class="font-bold text-slate-900 mb-2">¿Qué es el asesoramiento genético pre-test?</h3>
-                    <p class="text-slate-600 text-sm">Es una consulta fundamental donde evaluamos tu historia clínica y
-                        familiar para determinar qué estudio es el más adecuado para vos, explicando alcances y
-                        limitaciones.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                    <h3 class="font-bold text-slate-900 mb-2">¿Cuánto tiempo tarda un estudio de Exoma?</h3>
-                    <p class="text-slate-600 text-sm">Los tiempos pueden variar según la complejidad bioinformática,
-                        pero generalmente el informe médico final toma entre 45 y 90 días.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                    <h3 class="font-bold text-slate-900 mb-2">¿Realizás consultas de segunda opinión?</h3>
-                    <p class="text-slate-600 text-sm">Sí. Me especializo en la re-interpretación de estudios previos y
-                        variantes complejas (VUS) para brindar claridad diagnóstica.</p>
-                </div>
+                <details class="group border-b border-premium pb-6">
+                    <summary
+                        class="flex justify-between items-center cursor-pointer list-none font-bold text-slate-900">
+                        <span>¿Cuál es el rol del genetista en el diagnóstico de EPOF?</span>
+                        <span class="text-blue-600 text-xl group-open:rotate-45 transition">+</span>
+                    </summary>
+                    <p class="mt-4 text-sm text-slate-600 leading-relaxed">Actuamos como coordinadores del diagnóstico,
+                        uniendo la clínica con la tecnología genómica para brindar una respuesta concreta a la
+                        incertidumbre de la familia.</p>
+                </details>
+                <details class="group border-b border-premium pb-6">
+                    <summary
+                        class="flex justify-between items-center cursor-pointer list-none font-bold text-slate-900">
+                        <span>¿Qué es la medicina de precisión?</span>
+                        <span class="text-blue-600 text-xl group-open:rotate-45 transition">+</span>
+                    </summary>
+                    <p class="mt-4 text-sm text-slate-600 leading-relaxed">Es un enfoque que utiliza la información
+                        biológica (ADN) del individuo para personalizar el tratamiento y el seguimiento médico de forma
+                        exacta.</p>
+                </details>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer / Contacto -->
-    <footer id="contacto" class="bg-slate-900 text-slate-300 py-16">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-2xl font-bold text-white mb-6">Contacto Profesional</h2>
-            <p class="mb-8">Para consultas académicas, derivaciones o colaboraciones.</p>
+    </main>
 
-            <a href="mailto:forero.94@gmail.com"
-                class="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition mb-6">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                    </path>
-                </svg>
-                forero.94@gmail.com
-            </a>
-
-            <div class="mt-8 pt-8 border-t border-slate-800 text-sm opacity-60">
-                <p>&copy; 2026 Dr. Alan Govinda Gómez Forero. Todos los derechos reservados.</p>
-                <p class="mt-2">Buenos Aires, Argentina 🇦🇷</p>
+    <!-- Footer -->
+    <footer id="contacto" class="bg-slate-900 text-white py-24">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-black mb-8 uppercase tracking-widest">Contacto Profesional</h2>
+            <div class="flex flex-col items-center gap-6">
+                <a href="mailto:forero.94@gmail.com"
+                    class="text-2xl font-light hover:text-blue-400 transition border-b border-white/20 pb-2">forero.94@gmail.com</a>
+                <a href="https://www.linkedin.com/in/alangomezforero/" target="_blank"
+                    class="text-sm bg-white/10 px-6 py-2 rounded-full hover:bg-white/20 transition">LinkedIn Profile</a>
             </div>
+            <p class="mt-20 text-xs text-slate-500 uppercase tracking-[0.2em]">© 2026 Dr. Alan Gómez Forero · Centro
+                Nacional de Genética Médica · Buenos Aires</p>
         </div>
     </footer>
 
