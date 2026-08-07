@@ -1,640 +1,539 @@
 <!DOCTYPE html>
-<html lang="es" class="dark scroll-smooth">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr. Alan Govinda Gómez Forero | Médico Genetista</title>
+    <title>Dr. Alan Gómez Forero | Genética médica y tecnología clínica</title>
     <meta name="description"
-        content="Residente de Genética Médica (CNGM). Diagnóstico de EPOF, Asesoramiento Genético y Bioinformática Clínica.">
+        content="Residente de Genética Médica en el Centro Nacional de Genética Médica. Enfermedades poco frecuentes, asesoramiento familiar y tecnologías aplicadas a la práctica clínica.">
 
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://alangomezforero.com.ar/">
-    <meta property="og:title" content="Dr. Alan Gómez Forero | Médico Genetista">
-    <meta property="og:description"
-        content="Especialista en Diagnóstico de EPOF, Asesoramiento Genético y Bioinformática Clínica.">
-    <meta property="og:image" content="https://alangomezforero.com.ar/profile-nanopore.png">
-
-    <!-- Tailwind CSS (Utility) -->
+    <link rel="canonical" href="https://alangomezforero.com.ar/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://alangomezforero.com.ar/">
+    <meta property="og:title" content="Dr. Alan Gómez Forero | Genética médica y tecnología clínica">
+    <meta property="og:description"
+        content="Residente de Genética Médica (CNGM). Enfermedades poco frecuentes, asesoramiento familiar y tecnologías aplicadas a la práctica clínica.">
+    <meta property="og:image" content="https://alangomezforero.com.ar/og.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Tema: se aplica antes de pintar para que no haya parpadeo -->
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
+        (function () {
+            try {
+                var saved = localStorage.getItem('theme');
+                if (saved === 'dark' || saved === 'light') {
+                    document.documentElement.setAttribute('data-theme', saved);
+                }
+            } catch (e) { /* localStorage bloqueado: queda la preferencia del sistema */ }
+        }());
     </script>
 
-    <!-- Google Fonts: Playfair Display (Academic) & Lora (Serious Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@700;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 
-    <style>
-        :root {
-            --medical-blue: #0f172a;
-            --accent-blue: #2563eb;
-            --paper-white: #fcfcfc;
-            /* Night Mode Variables */
-            --night-bg: #020617;
-            --night-text: #e2e8f0;
-        }
-
-        body {
-            font-family: 'Lora', serif;
-            background-color: var(--paper-white);
-            color: #0f172a;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        .dark body {
-            background-color: var(--night-bg);
-            color: var(--night-text);
-        }
-
-        h1,
-        h2,
-        h3 {
-            font-family: 'Playfair Display', serif;
-            letter-spacing: -0.02em;
-        }
-
-        .border-premium {
-            border-color: rgba(15, 23, 42, 0.1);
-        }
-
-        .cv-section-title {
-            position: relative;
-            padding-bottom: 0.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .cv-section-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--accent-blue);
-        }
-
-        .hero-gradient {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-        }
-
-        /* Subtle Fade In */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fade {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        .dark .hero-gradient {
-            background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
-        }
-    </style>
-
-    <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Physician",
-          "@id": "https://alangomezforero.com.ar/#doctor",
-          "name": "Dr. Alan Govinda Gómez Forero",
-          "url": "https://alangomezforero.com.ar",
-          "image": "https://alangomezforero.com.ar/profile-nanopore.png",
-          "medicalSpecialty": "Medical Genetics",
-          "description": "Médico residente de Genética Médica en el Centro Nacional de Genética Médica (CNGM).",
-          "alumniOf": {
-            "@type": "CollegeOrUniversity",
-            "name": "Universidad de Buenos Aires"
-          },
-          "knowsAbout": ["Exoma", "Enfermedades Poco Frecuentes", "Asesoramiento Genético"],
-          "sameAs": [
-            "https://www.linkedin.com/in/alangomezforero/"
-          ],
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Ciudad Autónoma de Buenos Aires",
-            "addressCountry": "AR"
-          },
-          "areaServed": [
-            {
-              "@type": "City",
-              "name": "Buenos Aires"
-            },
-            {
-              "@type": "AdministrativeArea",
-              "name": "CABA"
-            }
-          ]
-        },
-        {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "¿Cuál es el rol del genetista en el diagnóstico de EPOF?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Actuamos como coordinadores del diagnóstico, uniendo la clínica con la tecnología genómica para brindar una respuesta concreta a la incertidumbre de la familia."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Qué es la medicina de precisión?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Es un enfoque que utiliza la información biológica (ADN) del individuo para personalizar el tratamiento y el seguimiento médico de forma exacta."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Cuánto tarda un estudio de Exoma?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Generalmente entre 45 y 90 días para un análisis completo con interpretación clínica detallada."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Cuál es la diferencia entre un cariotipo y un exoma?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "El cariotipo analiza la estructura general de los cromosomas, mientras que el exoma lee las letras del ADN en busca de errores específicos."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Mis datos genéticos son privados?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Sí, se rigen por estrictas leyes de confidencialidad y secreto profesional."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Qué es el asesoramiento genético pre-test?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Una sesión para discutir utilidad, alcances y limitaciones del estudio antes de realizarlo."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Se pueden prevenir las enfermedades genéticas?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Muchas enfermedades recesivas pueden prevenirse mediante el tamizaje de portadores y una planificación familiar informada."
-              }
-            }
-          ]
-        }
+      "@type": "Person",
+      "name": "Alan Govinda Gómez Forero",
+      "honorificPrefix": "Dr.",
+      "url": "https://alangomezforero.com.ar",
+      "jobTitle": "Médico residente de Genética Médica",
+      "email": "info@alangomezforero.com.ar",
+      "description": "Residente de Genética Médica dedicado al diagnóstico de enfermedades poco frecuentes, al asesoramiento genético familiar y a la incorporación de tecnologías disruptivas en la práctica médica.",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universidad de Buenos Aires"
+      },
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Centro Nacional de Genética Médica (CNGM)"
+      },
+      "knowsAbout": [
+        "Genética médica",
+        "Enfermedades poco frecuentes",
+        "Asesoramiento genético",
+        "Interpretación de variantes",
+        "Bioinformática clínica",
+        "Tecnologías aplicadas a la práctica médica"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ciudad Autónoma de Buenos Aires",
+        "addressCountry": "AR"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/alangomezforero/",
+        "https://github.com/forero94"
       ]
     }
     </script>
 </head>
 
-<body class="selection:bg-blue-100">
+<body>
+    <a class="skip-link" href="#main">Saltar al contenido</a>
 
-    <!-- Navbar -->
-    <nav class="bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-premium sticky top-0 z-50">
-        <div
-            class="max-w-4xl mx-auto px-6 h-20 flex justify-between items-center text-sm uppercase tracking-widest font-semibold">
-            <span class="text-slate-900 dark:text-white">Dr. Alan Gómez Forero</span>
-            <div class="space-x-8 hidden md:block">
-                <a href="#perfil"
-                    class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Perfil</a>
-                <a href="#experiencia"
-                    class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Experiencia</a>
-                <a href="#servicios"
-                    class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Especialidades</a>
-                <a href="#contacto"
-                    class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition">Contacto</a>
+    <!-- ============ Navegación ============ -->
+    <nav class="nav">
+        <div class="wrap">
+            <div class="nav__bar">
+                <a class="nav__brand" href="#">Alan Gómez Forero</a>
+
+                <div class="nav__right">
+                    <div class="nav__links">
+                        <a href="#caso">Caso</a>
+                        <a href="#perfil">Perfil</a>
+                        <a href="#trayectoria">Trayectoria</a>
+                        <a href="#desarrollos">Desarrollos</a>
+                        <a href="#contacto">Contacto</a>
+                    </div>
+
+                    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Cambiar entre tema claro y oscuro">
+                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4.2" />
+                            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+                        </svg>
+                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M20 14.5A8.2 8.2 0 019.5 4a8.3 8.3 0 1010.5 10.5z" />
+                        </svg>
+                    </button>
+
+                    <button class="icon-btn nav__toggle" id="nav-toggle" type="button" aria-expanded="false"
+                        aria-controls="nav-mobile" aria-label="Abrir menú">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" aria-hidden="true">
+                            <path d="M4 7h16M4 12h16M4 17h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="nav__mobile" id="nav-mobile">
+                <a href="#caso">Caso</a>
+                <a href="#perfil">Perfil</a>
+                <a href="#trayectoria">Trayectoria</a>
+                <a href="#desarrollos">Desarrollos</a>
+                <a href="#contacto">Contacto</a>
             </div>
         </div>
     </nav>
 
-    <!-- Header / Hero (Serious Academic Style) -->
-    <header class="hero-gradient py-24 border-b border-premium">
-        <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-2/3 animate-fade text-center md:text-left">
-                <div
-                    class="mb-4 inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                    <span class="relative flex h-2 w-2">
-                        <span
-                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                    </span>
-                    Actualización: Febrero 2026
+    <main id="main">
+
+        <!-- ============ Hero ============ -->
+        <header class="hero">
+            <div class="wrap">
+                <div class="hero__grid">
+                    <div>
+                        <h1>Genética clínica y las tecnologías que la transforman</h1>
+                        <p class="hero__sub">
+                            Residente de Genética Médica en el Centro Nacional de Genética Médica. Diagnostico
+                            enfermedades poco frecuentes, asesoro familias y llevo tecnología nueva a la consulta.
+                        </p>
+                        <div class="btn-row">
+                            <a class="btn btn--primary" href="#caso">Ver cómo razono un caso</a>
+                            <a class="btn btn--ghost" href="#contacto">Escribime</a>
+                        </div>
+                    </div>
+                    <img class="hero__portrait" src="action-nanopore.jpg"
+                        alt="Retrato de Alan Gómez Forero">
                 </div>
-                <h1 class="text-5xl md:text-6xl text-slate-950 dark:text-white mb-6 font-black">Genética Médica &
-                    Medicina de Precisión
-                </h1>
-                <p class="text-xl text-slate-800 dark:text-slate-300 leading-relaxed max-w-xl italic">
-                    "Interpretar el lenguaje del genoma para transformar la práctica clínica."
-                </p>
             </div>
-            <div class="md:w-1/3 flex justify-center">
-                <img src="action-nanopore.jpg" alt="Dr. Alan Gómez"
-                    class="w-64 h-64 object-cover rounded-xl shadow-2xl grayscale hover:grayscale-0 transition duration-500 border-4 border-white">
-            </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-6 py-24 space-y-32">
+        <!-- ============ Caso interactivo ============ -->
+        <section class="section case" id="caso">
+            <div class="wrap">
+                <p class="section__label">Caso guiado</p>
+                <h2 class="section__title">El árbol familiar decide antes que el laboratorio</h2>
 
-        <!-- Perfil Profesional -->
-        <section id="perfil" class="animate-fade">
-            <h2 class="text-3xl text-slate-950 dark:text-white cv-section-title uppercase tracking-tight">Perfil
-                Profesional</h2>
-            <div class="grid md:grid-cols-5 gap-12 items-start">
-                <div class="md:col-span-3 prose prose-slate dark:prose-invert leading-relaxed">
-                    <p class="text-lg text-slate-800 dark:text-slate-300">
-                        Médico egresado de la <a href="https://www.fmed.uba.ar/" target="_blank"
-                            class="text-blue-700 font-semibold hover:underline">Universidad de Buenos Aires (UBA)</a>
-                        con formación
-                        focalizada en el diagnóstico de Enfermedades Poco Frecuentes (EPOF) y el asesoramiento genético
-                        avanzado.
+                <div class="case__intro">
+                    <p class="case__thesis">
+                        Pedir el estudio correcto es la parte fácil. Lo difícil es saber a quién hay que estudiar,
+                        y eso casi siempre está en el árbol familiar.
                     </p>
-                    <p class="text-slate-800 dark:text-slate-300 line-clamp-none">
-                        Actualmente me desempeño como Residente en el <a
-                            href="https://www.argentina.gob.ar/salud/anlis/cngm" target="_blank"
-                            class="text-blue-700 font-semibold hover:underline">Centro Nacional de Genética Médica
-                            (CNGM)</a>, integrando herramientas bioinformáticas y tecnologías de secuenciación de
-                        tercera generación (Nanopore) para la resolución de casos clínicos de alta complejidad.
+                    <p>
+                        Este es un caso docente: el árbol familiar se construye paso a paso, igual que en la
+                        consulta, y cada dato nuevo cambia la hipótesis. No corresponde a ningún paciente real.
                     </p>
                 </div>
-                <div
-                    class="md:col-span-2 bg-slate-50 dark:bg-slate-900 p-8 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
-                    <h3 class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 font-bold mb-4">
-                        Resumen</h3>
-                    <ul class="text-sm space-y-3 text-slate-800 dark:text-slate-300">
-                        <li class="flex justify-between"><span>Título:</span> <span
-                                class="font-semibold text-slate-900 dark:text-white">Médico (UBA)</span></li>
-                        <li class="flex justify-between"><span>Cargo:</span> <span
-                                class="font-semibold italic text-blue-700 dark:text-blue-400">Residente CNGM</span></li>
-                        <li class="flex justify-between"><span>Ubicación:</span> <span
-                                class="font-semibold text-right text-slate-900 dark:text-white">CABA, Argentina</span>
-                        </li>
-                        <li class="flex justify-between"><span>Foco:</span> <span
-                                class="font-semibold text-right text-slate-950 dark:text-white">Bioinformática &
-                                Nanopore</span></li>
-                    </ul>
 
-                    <!-- Idiomas -->
-                    <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
-                        <h3 class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 font-bold mb-4">
-                            Idiomas</h3>
-                        <ul class="text-sm space-y-2 text-slate-800 dark:text-slate-300">
-                            <li class="flex justify-between"><span>Español</span> <span
-                                    class="font-semibold text-slate-900 dark:text-white">Nativo</span></li>
-                            <li class="flex justify-between"><span>Inglés</span> <span
-                                    class="font-semibold text-slate-900 dark:text-white">C1 / Fluido</span></li>
-                            <li class="flex justify-between"><span>Ruso</span> <span
-                                    class="font-semibold text-slate-900 dark:text-white">A1 / Básico</span></li>
+                <div class="case__board">
+                    <!-- Dibujo -->
+                    <div class="case__stage">
+                        <div class="case__svg-scroll" id="pedigree"></div>
+                        <ul class="legend">
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <rect x="2" y="2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" />
+                                </svg>Varón
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6" />
+                                </svg>Mujer
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <rect x="2" y="2" width="16" height="16" fill="currentColor" />
+                                </svg>Afectado
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6" />
+                                    <circle cx="10" cy="10" r="3" fill="currentColor" />
+                                </svg>Portadora
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <rect x="3" y="3" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" />
+                                    <line x1="1" y1="19" x2="19" y2="1" stroke="currentColor" stroke-width="1.6" />
+                                </svg>Fallecido
+                            </li>
                         </ul>
                     </div>
+
+                    <!-- Relato. Sin JS se lee completo, de corrido. -->
+                    <div class="case__panel">
+                        <ul class="case__progress" id="case-progress" aria-hidden="true"></ul>
+
+                        <div data-case-step>
+                            <p class="case__step-n">Paso 01</p>
+                            <h3 class="case__step-title">El motivo de consulta</h3>
+                            <div class="case__body">
+                                <p>
+                                    Varón de 5 años derivado por retraso global del desarrollo, con compromiso
+                                    predominante del lenguaje. Sin rasgos físicos que orienten a un síndrome
+                                    conocido. Padres jóvenes, sanos, sin parentesco entre sí.
+                                </p>
+                                <p>La familia lo presenta como <strong>el único caso</strong>.</p>
+                            </div>
+                            <p class="case__hypothesis"><span>Hipótesis</span>Caso aislado: una mutación nueva,
+                                que no vendría de los padres.</p>
+                        </div>
+
+                        <div data-case-step>
+                            <p class="case__step-n">Paso 02</p>
+                            <h3 class="case__step-title">La hermana</h3>
+                            <div class="case__body">
+                                <p>
+                                    Tiene una hermana de 8 años, sana, con escolaridad y desarrollo normales.
+                                </p>
+                                <p>
+                                    Todavía nada rompe la hipótesis inicial. Pero ya sé a quién voy a tener que
+                                    asesorar si esto termina siendo hereditario, y por eso entra al árbol desde
+                                    el principio.
+                                </p>
+                            </div>
+                            <p class="case__hypothesis"><span>Hipótesis</span>Sin cambios. Sigue pareciendo
+                                esporádico.</p>
+                        </div>
+
+                        <div data-case-step>
+                            <p class="case__step-n">Paso 03</p>
+                            <h3 class="case__step-title">La pregunta que cambia el caso</h3>
+                            <div class="case__body">
+                                <p>
+                                    No pregunto «¿hay alguien más afectado en la familia?». Esa pregunta casi
+                                    siempre se responde que no. Pregunto por <strong>cada hermano de la madre,
+                                    uno por uno</strong>.
+                                </p>
+                                <p>
+                                    Aparece un tío materno fallecido a los 19 años, con «retraso madurativo»,
+                                    que nunca fue estudiado. La familia no lo había mencionado porque no lo
+                                    relacionaba con el nene.
+                                </p>
+                            </div>
+                            <p class="case__hypothesis"><span>Hipótesis</span>Ya no es esporádico. Entra herencia
+                                mendeliana.</p>
+                        </div>
+
+                        <div data-case-step>
+                            <p class="case__step-n">Paso 04</p>
+                            <h3 class="case__step-title">Los primos</h3>
+                            <div class="case__body">
+                                <p>
+                                    La rama materna sigue dando. Una tía materna tiene un hijo varón, también con
+                                    retraso del desarrollo, en seguimiento por neurología y sin diagnóstico.
+                                </p>
+                                <p>
+                                    Las mujeres de la familia —abuela, tía, madre, hermana— están todas sanas.
+                                </p>
+                            </div>
+                            <p class="case__hypothesis"><span>Hipótesis</span>Tres varones afectados, ninguna mujer,
+                                todos por línea materna.</p>
+                        </div>
+
+                        <div data-case-step>
+                            <p class="case__step-n">Paso 05</p>
+                            <h3 class="case__step-title">El patrón</h3>
+                            <div class="case__body">
+                                <p>
+                                    Tres varones afectados, en tres ramas distintas, conectados entre sí
+                                    <strong>solo a través de mujeres sanas</strong>. Ninguna mujer afectada.
+                                    Ninguna transmisión de padre a hijo varón.
+                                </p>
+                                <p>
+                                    Eso es <strong>herencia recesiva ligada al X</strong>. Y convierte a la abuela,
+                                    a la tía y a la madre en portadoras obligadas: lo sé por posición en el árbol,
+                                    sin necesidad de estudiarlas.
+                                </p>
+                            </div>
+                            <p class="case__hypothesis"><span>Hipótesis</span>Recesiva ligada al X.</p>
+                        </div>
+
+                        <div data-case-step>
+                            <p class="case__step-n">Paso 06</p>
+                            <h3 class="case__step-title">Qué cambió, en concreto</h3>
+                            <div class="case__body">
+                                <p>
+                                    <strong>La estrategia.</strong> El estudio se orienta al cromosoma X y el
+                                    resultado se interpreta contra una hipótesis previa, no a ciegas. Una variante
+                                    dudosa deja de ser dudosa cuando el árbol ya predijo dónde buscarla.
+                                </p>
+                                <p>
+                                    <strong>Y sobre todo, la hermana.</strong> Tiene 50% de probabilidad de ser
+                                    portadora y está entrando en edad reproductiva. Nadie la había mencionado
+                                    como parte del caso: vino acompañando.
+                                </p>
+                                <p>
+                                    El exoma del paciente habría encontrado la misma variante. Pero el motivo por
+                                    el cual hay que citarla a ella sale del árbol, no del informe.
+                                </p>
+                            </div>
+                            <p class="case__hypothesis"><span>Conducta</span>Estudio dirigido al paciente y
+                                asesoramiento a las mujeres de la rama materna.</p>
+                        </div>
+
+                        <div class="case__nav">
+                            <button class="btn btn--ghost" id="case-prev" type="button">← Anterior</button>
+                            <button class="btn btn--primary" id="case-next" type="button">Siguiente →</button>
+                            <span class="case__count" id="case-count"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Experiencia & Formación (CV Style) -->
-        <section id="experiencia" class="animate-fade" style="animation-delay: 0.2s;">
-            <h2 class="text-3xl text-slate-950 dark:text-white cv-section-title uppercase tracking-tight">Trayectoria
-                Institucional</h2>
-            <div class="space-y-12">
-                <div class="flex gap-8 group">
-                    <div class="text-sm text-slate-500 font-bold pt-1 min-w-[100px]">2024 - <span
-                            class="text-blue-700">Presente</span></div>
+        <!-- ============ Perfil ============ -->
+        <section class="section" id="perfil">
+            <div class="wrap">
+                <p class="section__label">Perfil</p>
+                <h2 class="section__title">Quién soy</h2>
+
+                <div class="profile">
                     <div>
-                        <h3 class="text-xl font-bold text-slate-950 dark:text-white">Residencia de Genética Médica</h3>
-                        <p class="text-slate-800 dark:text-slate-300 mb-2 font-semibold italic">Centro Nacional de
-                            Genética Médica (CNGM)
+                        <p class="lead">
+                            Médico egresado de la Universidad de Buenos Aires, residente de Genética Médica en el
+                            Centro Nacional de Genética Médica (CNGM).
                         </p>
-                        <p class="text-sm text-slate-700 dark:text-slate-400 leading-relaxed">Atención de pacientes con
-                            sospecha de
-                            patología de base genética, interpretación clínica de exomas y asesoramiento a familias.</p>
-                    </div>
-                </div>
-                <!-- Experiencia Clínica: Italiano -->
-                <div class="flex gap-8 group">
-                    <div class="text-sm text-slate-500 font-bold pt-1 min-w-[100px]">2023 - <span
-                            class="text-blue-700">Presente</span></div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-950 dark:text-white">Médico de Guardia (Clínica Médica)
-                        </h3>
-                        <p class="text-slate-800 dark:text-slate-300 mb-2 font-semibold italic"><a
-                                href="https://www.hospitalitaliano.org.ar/" target="_blank"
-                                class="hover:text-blue-700 transition">Hospital Italiano de Buenos Aires</a></p>
-                        <p class="text-sm text-slate-700 dark:text-slate-400 leading-relaxed">Atención en demanda
-                            espontánea de guardia.
-                            Gestión de patologías clínicas agudas en una institución de alta complejidad.</p>
-                    </div>
-                </div>
-                <!-- Experiencia Clínica: CEMIC -->
-                <div class="flex gap-8 group">
-                    <div class="text-sm text-slate-500 font-bold pt-1 min-w-[100px]">2023 - <span
-                            class="text-blue-700">Presente</span></div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-950 dark:text-white">Médico de Guardia</h3>
-                        <p class="text-slate-800 dark:text-slate-300 mb-2 font-semibold italic"><a
-                                href="https://www.cemic.edu.ar/" target="_blank"
-                                class="hover:text-blue-700 transition">CEMIC (Sede Pombo)</a></p>
-                        <p class="text-sm text-slate-700 dark:text-slate-400 leading-relaxed">Práctica asistencial en
-                            medicina de
-                            emergencias y cuidados clínicos agudos.</p>
-                    </div>
-                </div>
-                <!-- Experiencia Clínica: Sanatorio Güemes -->
-                <div class="flex gap-8 group">
-                    <div class="text-sm text-slate-500 font-bold pt-1 min-w-[100px]">2022 - 2024</div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-950 dark:text-white">Médico de Guardia (Emergencias)
-                        </h3>
-                        <p class="text-slate-800 dark:text-slate-300 mb-2 font-semibold italic">Sanatorio Güemes</p>
-                        <p class="text-sm text-slate-700 dark:text-slate-400 leading-relaxed">Atención integral en el
-                            sector de demanda
-                            espontánea. Manejo y tratamiento de patologías de diversa complejidad en guardia externa.
+                        <p>
+                            Trabajo en el diagnóstico de enfermedades poco frecuentes: la parte del trabajo donde
+                            la respuesta no está en un algoritmo, sino en escuchar bien una historia familiar y
+                            decidir qué estudio vale la pena pedir. Después viene la parte técnica —interpretar
+                            variantes bajo criterios internacionales (ACMG), discutir el caso, escribir el
+                            informe— y por último la que más importa: explicarle a una familia qué significa
+                            todo eso.
+                        </p>
+                        <p>
+                            En paralelo desarrollo software clínico. Lo que me interesa es dónde la tecnología
+                            corre el límite de lo que un servicio puede hacer: un registro bien modelado
+                            convierte horas administrativas en tiempo de consulta, y un buen seguimiento evita
+                            que una familia se pierda entre dos turnos.
                         </p>
                     </div>
-                </div>
-                <div class="flex gap-8 group">
-                    <div class="text-sm text-slate-500 font-bold pt-1 min-w-[100px]">2013 - 2021</div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-950 dark:text-white">Grado en Medicina</h3>
-                        <p class="text-slate-800 mb-4 font-semibold italic">Facultad de Medicina, Universidad de Buenos
-                            Aires</p>
-                        <p class="text-sm text-slate-700 dark:text-slate-400 leading-relaxed">Formación médica de base
-                            en una de las
-                            instituciones líderes de Latinoamérica.</p>
-                    </div>
+
+                    <ul class="facts">
+                        <li><span class="k">Título</span><span class="v">Médico (UBA)</span></li>
+                        <li><span class="k">Posición</span><span class="v">Residente, CNGM</span></li>
+                        <li><span class="k">Ubicación</span><span class="v">CABA, Argentina</span></li>
+                        <li><span class="k">Área</span><span class="v">Enfermedades poco frecuentes</span></li>
+                        <li><span class="k">Foco</span><span class="v">Tecnologías disruptivas</span></li>
+                        <li><span class="k">Español</span><span class="v">Nativo</span></li>
+                        <li><span class="k">Inglés</span><span class="v">C1</span></li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Ruta de Atención (Patient Journey) -->
-        <section id="ruta" class="animate-fade" style="animation-delay: 0.3s;">
-            <h2 class="text-3xl text-slate-950 dark:text-white cv-section-title uppercase tracking-tight">Ruta de
-                Atención Personalizada
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
-                <!-- Step 1 -->
-                <div
-                    class="relative p-6 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:shadow-md transition group">
-                    <div
-                        class="w-10 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center mb-4 text-blue-700 dark:text-blue-400 group-hover:bg-blue-700 group-hover:text-white transition shadow-sm">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
-                            </path>
-                        </svg>
-                    </div>
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Paso
-                        01</span>
-                    <h3 class="font-bold text-slate-950 dark:text-white mb-2">Evaluación Clínica</h3>
-                    <p class="text-xs text-slate-700 dark:text-slate-400 leading-relaxed">Historia clínica detallada y
-                        examen físico para
-                        identificar el fenotipo característico.</p>
-                </div>
-                <!-- Step 2 -->
-                <div
-                    class="relative p-6 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:shadow-md transition group">
-                    <div
-                        class="w-10 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center mb-4 text-blue-700 dark:text-blue-400 group-hover:bg-blue-700 group-hover:text-white transition shadow-sm">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.628.281a2 2 0 01-1.18.124l-2.404-.44a2 2 0 01-1.425-1.928V6.305A2 2 0 014.437 4.72l1.582-.38a2 2 0 011.847.371l2.456 1.842a2 2 0 00.832.374l2.647.529a2 2 0 011.437 2.596l-1.374 4.121m1.214 1.214l-4.121 1.374a2 2 0 01-2.596-1.437l-.529-2.647a2 2 0 00-.374-.832l-1.842-2.456a2 2 0 01-.371-1.847l.38-1.582a2 2 0 011.585-1.581">
-                            </path>
-                        </svg>
-                    </div>
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Paso
-                        02</span>
-                    <h3 class="font-bold text-slate-950 dark:text-white mb-2">Diseño Estratégico</h3>
-                    <p class="text-xs text-slate-700 dark:text-slate-400 leading-relaxed">Selección personalizada del
-                        estudio (Exoma,
-                        Nanopore o Arrays) según el costo-beneficio.</p>
-                </div>
-                <!-- Step 3 -->
-                <div
-                    class="relative p-6 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:shadow-md transition group">
-                    <div
-                        class="w-10 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center mb-4 text-blue-700 dark:text-blue-400 group-hover:bg-blue-700 group-hover:text-white transition shadow-sm">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                        </svg>
-                    </div>
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Paso
-                        03</span>
-                    <h3 class="font-bold text-slate-950 dark:text-white mb-2">Análisis de Datos</h3>
-                    <p class="text-xs text-slate-700 dark:text-slate-400 leading-relaxed">Interpretación bioinformática
-                        avanzada de las
-                        variantes bajo guías internacionales ACMG.</p>
-                </div>
-                <!-- Step 4 -->
-                <div
-                    class="relative p-6 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:shadow-md transition group">
-                    <div
-                        class="w-10 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center mb-4 text-blue-700 dark:text-blue-400 group-hover:bg-blue-700 group-hover:text-white transition shadow-sm">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z">
-                            </path>
-                        </svg>
-                    </div>
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Paso
-                        04</span>
-                    <h3 class="font-bold text-slate-950 dark:text-white mb-2">Asesoramiento</h3>
-                    <p class="text-xs text-slate-700 dark:text-slate-400 leading-relaxed">Explicación clara de
-                        resultados y diseño del plan
-                        de manejo o terapéutico familiar.</p>
+        <!-- ============ Trayectoria ============ -->
+        <section class="section" id="trayectoria">
+            <div class="wrap">
+                <p class="section__label">Trayectoria</p>
+                <h2 class="section__title">Formación y ejercicio</h2>
+
+                <div class="cv">
+                    <article class="cv__item">
+                        <div class="cv__when">2024 — hoy</div>
+                        <div class="cv__what">
+                            <h3>Residencia de Genética Médica</h3>
+                            <p class="cv__where">Centro Nacional de Genética Médica (CNGM)</p>
+                            <p>
+                                Atención de pacientes con sospecha de patología genética, interpretación clínica
+                                de exomas y asesoramiento a familias. Desarrollo de las herramientas internas del
+                                servicio.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="cv__item">
+                        <div class="cv__when">2022 — hoy</div>
+                        <div class="cv__what">
+                            <h3>Médico de guardia</h3>
+                            <p class="cv__where">Hospital Italiano de Buenos Aires · CEMIC · Sanatorio Güemes</p>
+                            <p>
+                                Clínica médica y emergencias en guardia externa. Manejo de patología aguda de
+                                complejidad variable en instituciones de alta complejidad.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="cv__item">
+                        <div class="cv__when">2013 — 2021</div>
+                        <div class="cv__what">
+                            <h3>Medicina</h3>
+                            <p class="cv__where">Facultad de Medicina, Universidad de Buenos Aires</p>
+                            <p>Título de Médico.</p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- Especialidades (Services refined as Specialities) -->
-        <section id="servicios" class="animate-fade" style="animation-delay: 0.4s;">
-            <h2 class="text-3xl text-slate-950 dark:text-white cv-section-title uppercase tracking-tight">Áreas de
-                Especialización</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div
-                    class="p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm hover:border-blue-300 dark:hover:border-blue-500 transition">
-                    <h3
-                        class="text-xl font-bold text-slate-950 dark:text-white mb-3 underline decoration-blue-500 decoration-2 underline-offset-4">
-                        Diagnóstico Clínico de EPOF</h3>
-                    <p class="text-sm text-slate-800 dark:text-slate-300 leading-relaxed">Detección y seguimiento de
-                        enfermedades raras
-                        mediante evaluación clínica detallada y coordinación de estudios moleculares.</p>
-                    <p class="mt-3 text-xs italic text-slate-500 dark:text-slate-400">"Es como resolver un rompecabezas
-                        médico donde faltan
-                        piezas clave, integrando cada síntoma para revelar la imagen completa."</p>
+        <!-- ============ Desarrollos ============ -->
+        <section class="section" id="desarrollos">
+            <div class="wrap">
+                <p class="section__label">Desarrollos</p>
+                <h2 class="section__title">Software que construí para trabajar</h2>
+                <p class="lead" style="margin-bottom:2.5rem">
+                    Todo esto nació de un problema concreto en la consulta o en la formación, no de un ejercicio
+                    de programación.
+                </p>
+
+                <div class="cards">
+                    <article class="card">
+                        <h3>Sistema de gestión clínica</h3>
+                        <p>
+                            Plataforma de registro y seguimiento de familias, casos y turnos para un servicio de
+                            genética médica. Modelé los datos a partir del flujo asistencial real —donde la unidad
+                            no es el paciente sino la familia— y lo construí de punta a punta: API, base, frontend
+                            y despliegue.
+                        </p>
+                        <p class="card__stack">React · NestJS · Prisma · PostgreSQL</p>
+                    </article>
+
+                    <article class="card">
+                        <h3>Apoyo en dismorfología</h3>
+                        <p>
+                            Herramienta de entrenamiento para el reconocimiento de rasgos dismórficos —los
+                            detalles del rostro y las manos que orientan hacia un síndrome—, la habilidad más
+                            difícil de transmitir de la genética clínica y la que más depende de haber visto
+                            muchos casos.
+                        </p>
+                        <p class="card__stack">Next.js · TypeScript</p>
+                    </article>
+
+                    <article class="card">
+                        <h3>Plataforma de estudio</h3>
+                        <p>
+                            Sistema de progresión para el estudio de genética médica: mapas de contenidos,
+                            repetición espaciada y evaluación adaptativa, pensado para residentes que preparan
+                            exámenes de especialidad.
+                        </p>
+                        <p class="card__stack">HTML · JavaScript · Python</p>
+                    </article>
                 </div>
-                <div
-                    class="p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm hover:border-blue-300 dark:hover:border-blue-500 transition">
-                    <h3
-                        class="text-xl font-bold text-slate-950 dark:text-white mb-3 underline decoration-blue-500 decoration-2 underline-offset-4">
-                        Bioinformática Aplicada</h3>
-                    <p class="text-sm text-slate-800 dark:text-slate-300 leading-relaxed">Implementación de pipelines
-                        para análisis de
-                        secuenciación masiva (NGS y Nanopore) y medicina de precisión personalizada.</p>
-                    <p class="mt-3 text-xs italic text-slate-500 dark:text-slate-400">"Piense en esto como usar una
-                        supercomputadora para
-                        encontrar una errata específica en una biblioteca de tres mil millones de letras."</p>
-                </div>
-            </div>
-        </section>
 
-
-
-        <!-- FAQ (Minimalist Style) -->
-        <section id="preguntas" class="animate-fade" style="animation-delay: 0.6s;">
-            <h2 class="text-3xl text-slate-950 dark:text-white cv-section-title uppercase tracking-tight">Preguntas
-                Frecuentes</h2>
-            <div class="space-y-6">
-                <details class="group border-b border-slate-200 dark:border-slate-800 pb-6">
-                    <summary
-                        class="flex justify-between items-center cursor-pointer list-none font-bold text-slate-950 dark:text-white hover:text-blue-700 dark:hover:text-blue-400 transition">
-                        <span>¿Cuál es el rol del genetista en el diagnóstico de EPOF?</span>
-                        <span class="text-blue-700 text-xl group-open:rotate-45 transition">+</span>
-                    </summary>
-                    <p class="mt-4 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">Actuamos como
-                        coordinadores del diagnóstico,
-                        uniendo la clínica con la tecnología genómica para brindar una respuesta concreta a la
-                        incertidumbre de la familia.</p>
-                </details>
-                <details class="group border-b border-slate-200 dark:border-slate-800 pb-6">
-                    <summary
-                        class="flex justify-between items-center cursor-pointer list-none font-bold text-slate-950 dark:text-white hover:text-blue-700 dark:hover:text-blue-400 transition">
-                        <span>¿Qué es la medicina de precisión?</span>
-                        <span class="text-blue-700 text-xl group-open:rotate-45 transition">+</span>
-                    </summary>
-                    <p class="mt-4 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">Es un enfoque que utiliza
-                        la información
-                        biológica (ADN) del individuo para personalizar el tratamiento y el seguimiento médico de forma
-                        exacta.</p>
-                </details>
-                <details class="group border-b border-slate-200 dark:border-slate-800 pb-6">
-                    <summary
-                        class="flex justify-between items-center cursor-pointer list-none font-bold text-slate-950 dark:text-white hover:text-blue-700 dark:hover:text-blue-400 transition">
-                        <span>¿Cuánto tarda un estudio de Exoma?</span>
-                        <span class="text-blue-700 text-xl group-open:rotate-45 transition">+</span>
-                    </summary>
-                    <p class="mt-4 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">Los tiempos varían según
-                        la complejidad del
-                        estudio y el laboratorio, pero generalmente oscilan entre 45 y 90 días para un análisis completo
-                        con interpretación clínica detallada.</p>
-                </details>
-                <details class="group border-b border-slate-200 dark:border-slate-800 pb-6">
-                    <summary
-                        class="flex justify-between items-center cursor-pointer list-none font-bold text-slate-950 dark:text-white hover:text-blue-700 dark:hover:text-blue-400 transition">
-                        <span>¿Cuál es la diferencia entre un cariotipo y un exoma?</span>
-                        <span class="text-blue-700 text-xl group-open:rotate-45 transition">+</span>
-                    </summary>
-                    <p class="mt-4 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">El cariotipo analiza la
-                        estructura general de
-                        los cromosomas (es como ver los estantes de una biblioteca). El exoma 'lee' las letras del ADN
-                        en busca de errores específicos (es como leer las palabras dentro de un libro).</p>
-                </details>
-                <details class="group border-b border-slate-200 dark:border-slate-800 pb-6">
-                    <summary
-                        class="flex justify-between items-center cursor-pointer list-none font-bold text-slate-950 dark:text-white hover:text-blue-700 dark:hover:text-blue-400 transition">
-                        <span>¿Mis datos genéticos son privados?</span>
-                        <span class="text-blue-700 text-xl group-open:rotate-45 transition">+</span>
-                    </summary>
-                    <p class="mt-4 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">Absolutamente. El
-                        asesoramiento genético se
-                        rige por estrictas leyes de confidencialidad y secreto profesional. Tus datos están protegidos y
-                        solo se comparten bajo tu consentimiento explícito.</p>
-                </details>
-                <details class="group border-b border-slate-200 dark:border-slate-800 pb-6">
-                    <summary
-                        class="flex justify-between items-center cursor-pointer list-none font-bold text-slate-950 dark:text-white hover:text-blue-700 dark:hover:text-blue-400 transition">
-                        <span>¿Qué es el asesoramiento genético pre-test?</span>
-                        <span class="text-blue-700 text-xl group-open:rotate-45 transition">+</span>
-                    </summary>
-                    <p class="mt-4 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">Es el paso más
-                        importante: una sesión donde
-                        discutimos la utilidad del estudio, qué podemos encontrar y cómo esa información impactará en tu
-                        salud o la de tu familia antes de tomar la muestra.</p>
-                </details>
-                <details class="group border-b border-slate-200 dark:border-slate-800 pb-6">
-                    <summary
-                        class="flex justify-between items-center cursor-pointer list-none font-bold text-slate-950 dark:text-white hover:text-blue-700 dark:hover:text-blue-400 transition">
-                        <span>¿Se pueden prevenir las enfermedades genéticas?</span>
-                        <span class="text-blue-700 text-xl group-open:rotate-45 transition">+</span>
-                    </summary>
-                    <p class="mt-4 text-sm text-slate-800 dark:text-slate-300 leading-relaxed">A través del **tamizaje
-                        de portadores**
-                        (Carrier Screening) y la planificación familiar informada, muchas condiciones de herencia
-                        recesiva pueden ser detectadas antes del embarazo, permitiendo una toma de decisiones
-                        responsable.</p>
-                </details>
+                <p class="note">
+                    Acceso restringido por confidencialidad clínica e institucional.
+                </p>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer / Contacto -->
-    <footer id="contacto" class="bg-slate-900 text-white py-24">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-3xl font-black mb-12 uppercase tracking-widest text-center">Contacto Profesional</h2>
-
-            <div class="grid md:grid-cols-2 gap-8 mb-20">
-                <!-- Consulta Médica -->
-                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition group">
-                    <h3 class="text-xl font-bold mb-4 text-blue-400">Atención Clínica</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed mb-4">Para consultas médicas relativas a
-                        diagnóstico genético, pedido de turnos o asesoramiento familiar.</p>
-                    <p class="text-[10px] uppercase tracking-widest text-slate-500 mb-6 font-bold">Zonas: Boedo |
-                        Recoleta (CNGM)</p>
-                    <a href="mailto:info@alangomezforero.com.ar?subject=Consulta Médica"
-                        class="inline-flex items-center text-sm font-bold bg-blue-600 px-6 py-3 rounded-xl hover:bg-blue-700 transition">
-                        Solicitar Consulta
-                    </a>
-                </div>
-                <!-- Colaboración Académica -->
-                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition group">
-                    <h3 class="text-xl font-bold mb-4 text-slate-200">Colaboración Académica</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Proyectos de investigación, bioinformática o
-                        divulgación científica.</p>
-                    <a href="https://www.linkedin.com/in/alangomezforero/" target="_blank"
-                        class="inline-flex items-center text-sm font-bold border border-white/20 px-6 py-3 rounded-xl hover:bg-white/10 transition">
-                        Conectar vía LinkedIn
-                    </a>
-                </div>
-            </div>
-
-            <div class="text-center space-y-6">
-                <p class="text-2xl font-light border-b border-white/20 pb-4 inline-block">info@alangomezforero.com.ar
-                </p>
-                <p class="text-xs text-slate-500 uppercase tracking-[0.2em] pt-8">© 2026 Dr. Alan Gómez Forero · Centro
-                    Nacional de Genética Médica · Buenos Aires</p>
-                <div class="max-w-2xl mx-auto pt-8 border-t border-white/20">
-                    <p class="text-[10px] text-slate-400 leading-relaxed italic text-center uppercase tracking-widest">
-                        Compromiso de Autoría: Todo el contenido médico de este sitio es de autoría propia y se revisa
-                        periódicamente bajo estándares de la ACMG y guías clínicas internacionales 2026.
-                    </p>
-                </div>
+    <!-- ============ Contacto ============ -->
+    <section class="section contact" id="contacto">
+        <div class="wrap wrap--narrow">
+            <p class="section__label">Contacto</p>
+            <h2 class="section__title">Hablemos</h2>
+            <p class="lead" style="margin-bottom:2rem">
+                Colaboraciones en investigación, proyectos de bioinformática clínica, docencia o desarrollo de
+                herramientas para servicios de genética.
+            </p>
+            <p>
+                <a class="contact__mail" href="mailto:info@alangomezforero.com.ar">info@alangomezforero.com.ar</a>
+            </p>
+            <div class="btn-row" style="margin-top:2rem">
+                <a class="btn btn--ghost" href="https://www.linkedin.com/in/alangomezforero/" target="_blank"
+                    rel="noopener">LinkedIn</a>
+                <a class="btn btn--ghost" href="https://github.com/forero94" target="_blank"
+                    rel="noopener">GitHub</a>
             </div>
         </div>
+    </section>
+
+    <footer class="wrap foot">
+        <span>© 2026 Alan Gómez Forero · Buenos Aires, Argentina</span>
+        <span>El caso publicado es material docente y no corresponde a ningún paciente real.</span>
     </footer>
 
+    <script src="pedigree.js" defer></script>
+    <script>
+        // Tema: alterna y recuerda la elección
+        (function () {
+            var btn = document.getElementById('theme-toggle');
+            if (!btn) { return; }
+
+            btn.addEventListener('click', function () {
+                var root = document.documentElement;
+                var explicit = root.getAttribute('data-theme');
+                var isDark = explicit
+                    ? explicit === 'dark'
+                    : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var next = isDark ? 'light' : 'dark';
+
+                root.setAttribute('data-theme', next);
+                try { localStorage.setItem('theme', next); } catch (e) { /* sin persistencia */ }
+            });
+        }());
+
+        // Menú móvil
+        (function () {
+            var btn = document.getElementById('nav-toggle');
+            var menu = document.getElementById('nav-mobile');
+            if (!btn || !menu) { return; }
+
+            function close() {
+                menu.classList.remove('is-open');
+                btn.setAttribute('aria-expanded', 'false');
+                btn.setAttribute('aria-label', 'Abrir menú');
+            }
+
+            btn.addEventListener('click', function () {
+                var open = menu.classList.toggle('is-open');
+                btn.setAttribute('aria-expanded', String(open));
+                btn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+            });
+
+            menu.addEventListener('click', function (e) {
+                if (e.target.tagName === 'A') { close(); }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') { close(); }
+            });
+        }());
+    </script>
 </body>
 
 </html>
