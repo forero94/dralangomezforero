@@ -353,10 +353,18 @@ html { scroll-behavior: smooth; }
     box-shadow: var(--shadow);
 }
 
-/* En pantallas chicas el árbol scrollea en su propia caja
-   antes que encogerse hasta ser ilegible */
+/* El aspecto se fija acá y el JS encuadra el viewBox para que coincida:
+   así la caja no cambia de alto entre pasos. En pantallas muy angostas
+   scrollea antes que encogerse hasta ser ilegible. */
 .case__svg-scroll { overflow-x: auto; }
-.case__svg-scroll svg { display: block; min-width: 30rem; height: auto; }
+
+.case__svg-scroll svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 800 / 470;
+    min-width: 28rem;
+}
 
 .case__panel { display: flex; flex-direction: column; gap: 1.25rem; }
 

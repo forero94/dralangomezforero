@@ -10,7 +10,14 @@
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var R = 17;              // medio símbolo
-    var VIEW = '0 0 800 420';
+    var LABEL_DROP = 24;     // cuánto cuelga la etiqueta debajo del símbolo
+
+    /* El viewBox se recalcula en cada paso para encuadrar solo a las personas
+       visibles. Si fuera fijo, los primeros pasos aparecerían corridos hacia
+       un costado, porque ocupan una esquina del espacio del árbol completo. */
+    var VIEW_ASPECT = 800 / 470;   // debe coincidir con el aspect-ratio del CSS
+    var VIEW_PAD = 46;             // aire alrededor de lo visible
+    var VIEW_MIN_W = 420;          // tope de acercamiento: sin esto, 3 personas se verían gigantes
 
     /* ---------- Datos del árbol ---------- */
 
@@ -150,7 +157,8 @@
     if (!host || !stepEls.length) { return; }
 
     var svg = el('svg', {
-        viewBox: VIEW,
+        viewBox: '0 0 800 470',
+        preserveAspectRatio: 'xMidYMid meet',
         role: 'img',
         'aria-label': 'Árbol familiar de tres generaciones que se construye paso a paso a lo largo del caso.'
     });
@@ -207,9 +215,82 @@
 
     function has(list, id) { return !!list && list.indexOf(id) !== -1; }
 
-    function render(i) {
+    /* ---------- Encuadre ---------- */
+
+    /* Caja que contiene a las personas visibles en este paso, expandida
+       al aspecto del contenedor para que no queden franjas muertas. */
+    function viewBoxFor(step) {
+        var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+
+        NODES.forEach(function (n) {
+            if (!has(step.nodes, n.id)) { return; }
+            if (n.x - R < minX) { minX = n.x - R; }
+            if (n.x + R > maxX) { maxX = n.x + R; }
+            if (n.y - R < minY) { minY = n.y - R; }
+            var bottom = n.y + R + (n.label ? LABEL_DROP : 0);
+            if (bottom > maxY) { maxY = bottom; }
+        });
+
+        if (minX === Infinity) { return [0, 0, 800, 470]; }
+
+        minX -= VIEW_PAD; maxX += VIEW_PAD;
+        minY -= VIEW_PAD; maxY += VIEW_PAD;
+
+        var cx = (minX + maxX) / 2;
+        var cy = (minY + maxY) / 2;
+        var w = Math.max(maxX - minX, VIEW_MIN_W);
+        var h = Math.max(maxY - minY, VIEW_MIN_W / VIEW_ASPECT);
+
+        // llevar la caja al aspecto del contenedor sin recortar nada
+        if (w / h < VIEW_ASPECT) { w = h * VIEW_ASPECT; } else { h = w / VIEW_ASPECT; }
+
+        return [cx - w / 2, cy - h / 2, w, h];
+    }
+
+    var vbCurrent = [0, 0, 800, 470];
+    var vbFrame = null;
+
+    function applyViewBox(v) {
+        svg.setAttribute('viewBox', v[0] + ' ' + v[1] + ' ' + v[2] + ' ' + v[3]);
+    }
+
+    function easeInOut(t) {
+        return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    }
+
+    function setViewBox(target, animate) {
+        if (vbFrame) { cancelAnimationFrame(vbFrame); vbFrame = null; }
+
+        var reduce = window.matchMedia
+            && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!animate || reduce) {
+            vbCurrent = target.slice();
+            applyViewBox(vbCurrent);
+            return;
+        }
+
+        var from = vbCurrent.slice();
+        var start = null;
+
+        function frame(ts) {
+            if (start === null) { start = ts; }
+            var e = easeInOut(Math.min((ts - start) / 480, 1));
+            vbCurrent = from.map(function (f, idx) { return f + (target[idx] - f) * e; });
+            applyViewBox(vbCurrent);
+            vbFrame = (ts - start) < 480 ? requestAnimationFrame(frame) : null;
+        }
+
+        vbFrame = requestAnimationFrame(frame);
+    }
+
+    /* ---------- Render ---------- */
+
+    function render(i, animate) {
         var step = STEPS[i];
         if (!step) { return; }
+
+        setViewBox(viewBoxFor(step), animate);
 
         NODES.forEach(function (n) {
             var g = nodeEls[n.id];
@@ -243,9 +324,9 @@
         if (countEl) { countEl.textContent = (i + 1) + ' / ' + STEPS.length; }
     }
 
-    function go(i) {
+    function go(i, animate) {
         current = Math.max(0, Math.min(STEPS.length - 1, i));
-        render(current);
+        render(current, animate !== false);
     }
 
     if (prevBtn) { prevBtn.addEventListener('click', function () { go(current - 1); }); }
@@ -264,5 +345,6 @@
         go(current + (e.key === 'ArrowRight' ? 1 : -1));
     });
 
-    go(0);
+    // el primer encuadre entra ya puesto, sin animación
+    go(0, false);
 }());
