@@ -14,6 +14,7 @@ Está dirigido a colegas, empleadores y potenciales colaboradores. No es un siti
 | `pedigree.js` | Árbol familiar interactivo del caso guiado |
 | `arbol/` | Constructor de árboles familiares |
 | `genoma/` | Paisaje del genoma: el genoma de referencia pintado como un rollo de tinta |
+| `helice.js`, `helice.css` | Hebra de tinta: la doble hebra del paisaje, de pie en el margen de la home |
 | `og.jpg` | Preview para redes (1200×630) |
 | `CNAME` | Dominio: `alangomezforero.com.ar` |
 
@@ -57,5 +58,10 @@ La home lo presenta con una captura del propio paisaje, una por tema: `genoma/vi
 `genoma/vista-xq28-oscuro.webp`. Se sacaron en `genoma/?semilla=tinta#chrX:149270000`, sin el grano del
 papel, y están en WebP sin pérdida para que su papel sea exactamente el de la página. Si cambia el
 dibujo o la paleta, hay que volver a sacarlas: exportar en PNG desde esa dirección y recortar.
+
+`helice.js` pone la doble hebra de pie en el margen derecho de la home, pintada con más libertad que
+exactitud: no sale de ningún cromosoma. El scroll la recorre de punta a punta. Copia el pincel y los
+habitantes de `genoma/landscape.js`, así que un cambio allá no le llega solo. Aparece desde 81rem de
+ancho, donde el margen alcanza; el tablero del caso y la captura del genoma terminan justo donde empieza.
 
 > Es una representación didáctica, no a escala.

@@ -152,8 +152,10 @@ html { scroll-behavior: smooth; }
 .wrap--narrow { max-width: 46rem; }
 
 /* Para piezas que salen del ancho del texto (el tablero del caso, la captura del
-   genoma). Con los mismos márgenes laterales: en pantallas chicas no cambia nada. */
-.wrap--wide { max-width: 74rem; }
+   genoma). Con los mismos márgenes laterales: en pantallas chicas no cambia nada.
+   Salen 3rem por lado, lo justo para terminar donde empieza la hebra de tinta
+   del margen (helice.css): si se ensancha, se le montan encima. */
+.wrap--wide { max-width: 68rem; }
 
 .section { padding-block: clamp(4rem, 10vw, 7rem); }
 .section + .section { border-top: 1px solid var(--rule); }

@@ -1,0 +1,65 @@
+/* ============================================================
+   Hebra de tinta — fija en el margen derecho de la home.
+   Solo aparece donde el margen alcanza: 62rem de contenido y al
+   menos unos 150px de cada lado.
+   ============================================================ */
+
+/* azul de las proteínas, el mismo del paisaje */
+:root { --g-protein: #3d5a8c; }
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --g-protein: #93a9d8; }
+}
+
+:root[data-theme="dark"] { --g-protein: #93a9d8; }
+
+.helix { display: none; }
+
+@media (min-width: 81rem) {
+    .helix {
+        display: block;
+        position: fixed;
+        z-index: 1;
+        top: 4rem;
+        right: 0;
+        bottom: 0;
+        width: calc((100% - 62rem) / 2);
+        pointer-events: none;
+    }
+}
+
+/* la hebra entra y sale esfumada, como el rollo, y se apaga antes del rótulo */
+.helix canvas {
+    display: block;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 72%, transparent 88%);
+    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 72%, transparent 88%);
+}
+
+/* el sello de la obra, como en un rollo pintado: lleva al paisaje */
+.helix__seal {
+    position: absolute;
+    left: 45%;
+    bottom: 1.5rem;
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    transform: translateX(-50%) rotate(-3deg);
+    border-radius: 3px;
+    background: var(--accent);
+    /* el filete claro de adentro, como el borde tallado del sello */
+    box-shadow: inset 0 0 0 3px var(--accent), inset 0 0 0 4px var(--paper);
+    color: var(--paper);
+    font-family: var(--font-display);
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-decoration: none;
+    pointer-events: auto;
+    transition: transform .2s ease;
+}
+
+.helix__seal:hover {
+    color: var(--paper);
+    transform: translateX(-50%) rotate(0deg) scale(1.06);
+}

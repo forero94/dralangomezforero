@@ -37,6 +37,7 @@
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="helice.css">
 
     <script type="application/ld+json">
     {
@@ -543,7 +544,15 @@
         <span>El caso publicado es material docente y no corresponde a ningún paciente real.</span>
     </footer>
 
+    <!-- Hebra de tinta: fija en el margen derecho, la recorre el scroll; el sello lleva al paisaje.
+         Va al final para que, al tabular, el sello no aparezca antes que el menú. -->
+    <div class="helix" id="helix">
+        <canvas aria-hidden="true"></canvas>
+        <a class="helix__seal" href="genoma/" title="Recorrer el paisaje del genoma">ADN</a>
+    </div>
+
     <script src="pedigree.js" defer></script>
+    <script src="helice.js" defer></script>
     <script>
         // Tema: alterna y recuerda la elección
         (function () {
