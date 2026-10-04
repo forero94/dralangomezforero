@@ -10,7 +10,7 @@
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var R = 17;              // medio símbolo
-    var LABEL_DROP = 24;     // cuánto cuelga la etiqueta debajo del símbolo
+    var LABEL_DROP = 30;     // cuánto cuelga la etiqueta debajo del símbolo (la letra varía con la escala)
 
     /* El viewBox se recalcula en cada paso para encuadrar solo a las personas
        visibles. Si fuera fijo, los primeros pasos aparecerían corridos hacia
@@ -126,8 +126,10 @@
             }));
         }
 
+        // La letra cambia de tamaño con la escala (ver CSS): con dy en em, la
+        // etiqueta queda siempre a la misma distancia del símbolo.
         if (n.label) {
-            var t = el('text', { class: 'label', x: n.x, y: n.y + R + 17 });
+            var t = el('text', { class: 'label', x: n.x, y: n.y + R + 9, dy: '1em' });
             t.textContent = n.label;
             g.appendChild(t);
         }
@@ -137,8 +139,9 @@
 
     function drawProbandArrow(n) {
         var g = el('g', { class: 'ped-proband-arrow-group' });
-        var tailX = n.x - R - 22, tailY = n.y + R + 22;
-        var tipX = n.x - R - 4, tipY = n.y + R + 4;
+        // Apunta a la esquina inferior izquierda y termina antes de la etiqueta
+        var tipX = n.x - R - 3, tipY = n.y + R - 3;
+        var tailX = tipX - 15, tailY = tipY + 15;
 
         g.appendChild(el('line', {
             class: 'ped-proband-arrow', x1: tailX, y1: tailY, x2: tipX, y2: tipY
@@ -252,6 +255,11 @@
 
     function applyViewBox(v) {
         svg.setAttribute('viewBox', v[0] + ' ' + v[1] + ' ' + v[2] + ' ' + v[3]);
+
+        // Píxeles de pantalla por unidad del dibujo: el CSS la usa para que
+        // las etiquetas se vean del mismo tamaño en cualquier paso y pantalla.
+        var w = svg.getBoundingClientRect().width;
+        if (w) { svg.style.setProperty('--ped-scale', String(w / v[2])); }
     }
 
     function easeInOut(t) {
@@ -344,6 +352,15 @@
 
         go(current + (e.key === 'ArrowRight' ? 1 : -1));
     });
+
+    // Si cambia el ancho del dibujo cambia la escala, y con ella la letra
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(function () { applyViewBox(vbCurrent); }).observe(svg);
+    }
+
+    // Sin JS los botones no harían nada: recién ahora se muestran
+    var navEl = document.getElementById('case-nav');
+    if (navEl) { navEl.hidden = false; }
 
     // el primer encuadre entra ya puesto, sin animación
     go(0, false);

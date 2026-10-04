@@ -5,6 +5,8 @@
 
 /* ---------- Tokens: tema claro (base) ---------- */
 :root {
+    color-scheme: light;   /* barras de scroll y controles nativos del mismo tema */
+
     --paper: #fbfaf7;
     --paper-raised: #ffffff;
     --paper-sunken: #f3f1ec;
@@ -17,6 +19,9 @@
     --accent-hover: #8c3721;
     --accent-wash: #f6ebe6;
     --shadow: 0 1px 2px rgba(22, 21, 15, .05), 0 8px 24px -12px rgba(22, 21, 15, .12);
+
+    /* Fotos: en oscuro bajan el brillo para no encandilar */
+    --photo-filter: none;
 
     /* Árbol familiar: el lenguaje canónico es blanco y negro */
     --ped-line: #43413a;
@@ -34,6 +39,8 @@
 /* ---------- Tokens: tema oscuro por preferencia del sistema ---------- */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
+        color-scheme: dark;
+
         --paper: #14140f;
         --paper-raised: #1d1c16;
         --paper-sunken: #100f0b;
@@ -47,6 +54,8 @@
         --accent-wash: #2a1f19;
         --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px -12px rgba(0, 0, 0, .6);
 
+        --photo-filter: brightness(.85);
+
         --ped-line: #cbc7bb;
         --ped-fill: #f2efe6;
         --ped-empty: #14140f;
@@ -56,6 +65,8 @@
 
 /* ---------- Tokens: tema oscuro por elección explícita ---------- */
 :root[data-theme="dark"] {
+    color-scheme: dark;
+
     --paper: #14140f;
     --paper-raised: #1d1c16;
     --paper-sunken: #100f0b;
@@ -68,6 +79,8 @@
     --accent-hover: #eda183;
     --accent-wash: #2a1f19;
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px -12px rgba(0, 0, 0, .6);
+
+    --photo-filter: brightness(.85);
 
     --ped-line: #cbc7bb;
     --ped-fill: #f2efe6;
@@ -138,6 +151,10 @@ html { scroll-behavior: smooth; }
 
 .wrap--narrow { max-width: 46rem; }
 
+/* Para piezas que salen del ancho del texto (el tablero del caso, la captura del
+   genoma). Con los mismos márgenes laterales: en pantallas chicas no cambia nada. */
+.wrap--wide { max-width: 74rem; }
+
 .section { padding-block: clamp(4rem, 10vw, 7rem); }
 .section + .section { border-top: 1px solid var(--rule); }
 
@@ -154,6 +171,9 @@ html { scroll-behavior: smooth; }
     font-size: clamp(1.75rem, 4vw, 2.4rem);
     margin-bottom: 1.5rem;
 }
+
+/* Las dos piezas principales, el caso y el genoma, pesan más que el resto */
+.section--feature .section__title { font-size: clamp(2rem, 5vw, 3rem); }
 
 .lead {
     font-size: 1.15rem;
@@ -275,6 +295,26 @@ html { scroll-behavior: smooth; }
     align-items: center;
 }
 
+.hero__byline {
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+}
+
+.hero__name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: var(--ink);
+}
+
+.hero__role {
+    display: block;
+    font-size: .95rem;
+    color: var(--ink-muted);
+}
+
 .hero h1 {
     font-size: clamp(2.25rem, 6vw, 3.6rem);
     margin-bottom: 1.25rem;
@@ -287,19 +327,16 @@ html { scroll-behavior: smooth; }
     margin-bottom: 1.75rem;
 }
 
+/* La foto ya viene en 3:4, el mismo aspecto de la caja: no se recorta.
+   Las esquinas son las de las tarjetas. */
 .hero__portrait {
-    width: clamp(9rem, 20vw, 13rem);
-    aspect-ratio: 1;
+    width: clamp(12rem, 24vw, 17rem);
+    aspect-ratio: 3 / 4;
     object-fit: cover;
-    /* la foto es vertical: el recorte se corre hacia arriba para no comer la cabeza */
-    object-position: center 32%;
-    border-radius: 50%;
-    border: 1px solid var(--rule-strong);
-    filter: grayscale(1);
-    transition: filter .5s ease;
+    border-radius: .85rem;
+    border: 1px solid var(--rule);
+    filter: var(--photo-filter);
 }
-
-.hero__portrait:hover { filter: grayscale(0); }
 
 @media (max-width: 46rem) {
     .hero__grid { grid-template-columns: 1fr; }
@@ -353,8 +390,10 @@ html { scroll-behavior: smooth; }
     align-items: start;
 }
 
+/* minmax(0, …) y no 1fr: con 1fr la columna crece hasta el ancho mínimo de
+   su contenido y el tablero se sale de la pantalla. */
 @media (max-width: 56rem) {
-    .case__board { grid-template-columns: 1fr; }
+    .case__board { grid-template-columns: minmax(0, 1fr); }
 }
 
 .case__stage {
@@ -365,17 +404,19 @@ html { scroll-behavior: smooth; }
     box-shadow: var(--shadow);
 }
 
-/* El aspecto se fija acá y el JS encuadra el viewBox para que coincida:
-   así la caja no cambia de alto entre pasos. En pantallas muy angostas
-   scrollea antes que encogerse hasta ser ilegible. */
-.case__svg-scroll { overflow-x: auto; }
+/* En el celular, cada píxel de ancho es dibujo */
+@media (max-width: 40rem) {
+    .case__stage { padding: .75rem; }
+}
 
-.case__svg-scroll svg {
+/* El aspecto se fija acá y el JS encuadra el viewBox para que coincida:
+   así la caja no cambia de alto entre pasos. El dibujo siempre entra en el
+   ancho disponible; lo que mantiene legible es la letra, que compensa la escala. */
+.case__drawing svg {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 800 / 470;
-    min-width: 28rem;
 }
 
 .case__panel { display: flex; flex-direction: column; gap: 1.25rem; }
@@ -432,6 +473,13 @@ html { scroll-behavior: smooth; }
 }
 
 .case__nav { display: flex; gap: .6rem; align-items: center; }
+.case__nav[hidden] { display: none; }
+.case__nav .btn, .case__count { white-space: nowrap; }
+
+/* En los teléfonos más angostos, los dos botones y el contador entran en una línea */
+@media (max-width: 24rem) {
+    .case__nav .btn { padding-inline: 1rem; }
+}
 .case__count { margin-left: auto; font-size: .85rem; color: var(--ink-muted); }
 
 /* Leyenda de símbolos */
@@ -451,33 +499,44 @@ html { scroll-behavior: smooth; }
 .legend svg { width: 15px; height: 15px; flex-shrink: 0; }
 
 /* --- Elementos del árbol familiar --- */
+/* El encuadre cambia con cada paso y con el ancho de la pantalla. Los trazos no
+   escalan (siempre miden lo mismo en pantalla) y la letra de las etiquetas
+   divide por la escala que deja el JS en --ped-scale, así se ve a 11px. El tope
+   evita que en un celular las etiquetas tapen el dibujo. */
 .ped-line {
     stroke: var(--ped-line);
     stroke-width: 1.6;
     fill: none;
+    vector-effect: non-scaling-stroke;
 }
 
 .ped-node .sym {
     stroke: var(--ped-line);
     stroke-width: 1.6;
     fill: var(--ped-empty);
+    vector-effect: non-scaling-stroke;
 }
 
 .ped-node.is-affected .sym { fill: var(--ped-fill); }
 
 .ped-node .label {
     font-family: var(--font-body);
-    font-size: 11px;
+    font-size: min(22px, calc(11px / var(--ped-scale, 1)));
     font-weight: 500;
     fill: var(--ink-muted);
     text-anchor: middle;
+    /* Contorno del color de la caja: se lee aunque cruce una línea */
+    paint-order: stroke;
+    stroke: var(--paper-raised);
+    stroke-width: .3em;
+    stroke-linejoin: round;
 }
 
 .ped-node.is-proband .label { fill: var(--accent); font-weight: 650; }
 
-.ped-deceased { stroke: var(--ped-line); stroke-width: 1.6; }
+.ped-deceased { stroke: var(--ped-line); stroke-width: 1.6; vector-effect: non-scaling-stroke; }
 .ped-carrier { fill: var(--ped-line); }
-.ped-proband-arrow { stroke: var(--accent); stroke-width: 1.8; fill: none; }
+.ped-proband-arrow { stroke: var(--accent); stroke-width: 1.8; fill: none; vector-effect: non-scaling-stroke; }
 .ped-proband-arrow-head { fill: var(--accent); }
 
 /* Aparición progresiva */
@@ -499,6 +558,7 @@ html { scroll-behavior: smooth; }
     fill: none;
     stroke: var(--accent);
     stroke-width: 2;
+    vector-effect: non-scaling-stroke;
     opacity: 0;
     transition: opacity .45s ease;
 }
@@ -570,25 +630,26 @@ html { scroll-behavior: smooth; }
     max-width: var(--measure);
 }
 
-/* ---------- Trayectoria ---------- */
-.cv { display: flex; flex-direction: column; gap: 2.5rem; }
-
-.cv__item {
+/* ---------- Trayectoria: franja dentro del perfil ---------- */
+.cv {
     display: grid;
-    grid-template-columns: 7.5rem minmax(0, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1.75rem clamp(1.5rem, 4vw, 2.5rem);
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    scroll-margin-top: 5rem;   /* que un enlace a #trayectoria no quede bajo la barra */
 }
 
-@media (max-width: 40rem) {
-    .cv__item { grid-template-columns: 1fr; gap: .35rem; }
-}
+.cv .section__label { grid-column: 1 / -1; margin-bottom: -.75rem; }
+
+.cv__item { display: flex; flex-direction: column; gap: .35rem; }
 
 .cv__when {
     font-size: .85rem;
     font-weight: 600;
     color: var(--ink-muted);
     font-variant-numeric: tabular-nums;
-    padding-top: .15rem;
 }
 
 .cv__what h3 { font-size: 1.15rem; margin-bottom: .2rem; }

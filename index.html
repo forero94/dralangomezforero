@@ -123,7 +123,6 @@
                 <a href="arbol/">Árbol familiar</a>
                 <a href="#genoma">Genoma</a>
                 <a href="#perfil">Perfil</a>
-                <a href="#trayectoria">Trayectoria</a>
                 <a href="#desarrollos">Desarrollos</a>
                 <a href="#contacto">Contacto</a>
             </div>
@@ -137,27 +136,31 @@
             <div class="wrap">
                 <div class="hero__grid">
                     <div>
-                        <h1>Genética clínica y las tecnologías que la transforman</h1>
+                        <p class="hero__byline">
+                            <span class="hero__name">Dr. Alan Gómez Forero</span>
+                            <span class="hero__role">Residente de Genética Médica · CNGM</span>
+                        </p>
+                        <h1>El árbol familiar decide antes que el laboratorio</h1>
                         <p class="hero__sub">
-                            Residente de Genética Médica en el Centro Nacional de Genética Médica. Diagnostico
-                            enfermedades poco frecuentes, asesoro familias y llevo tecnología nueva a la consulta.
+                            Diagnostico enfermedades poco frecuentes, asesoro familias y llevo tecnología nueva
+                            a la consulta.
                         </p>
                         <div class="btn-row">
                             <a class="btn btn--primary" href="#caso">Ver cómo razono un caso</a>
                             <a class="btn btn--ghost" href="#contacto">Escribime</a>
                         </div>
                     </div>
-                    <img class="hero__portrait" src="action-nanopore.jpg"
+                    <img class="hero__portrait" src="retrato.webp" width="600" height="800"
                         alt="Retrato de Alan Gómez Forero">
                 </div>
             </div>
         </header>
 
         <!-- ============ Caso interactivo ============ -->
-        <section class="section case" id="caso">
+        <section class="section section--feature case" id="caso">
             <div class="wrap">
                 <p class="section__label">Caso guiado</p>
-                <h2 class="section__title">El árbol familiar decide antes que el laboratorio</h2>
+                <h2 class="section__title">Un caso que parecía aislado</h2>
 
                 <div class="case__intro">
                     <p class="case__thesis">
@@ -169,11 +172,14 @@
                         consulta, y cada dato nuevo cambia la hipótesis. No corresponde a ningún paciente real.
                     </p>
                 </div>
+            </div>
 
+            <!-- El tablero sale del ancho del texto: el árbol completo necesita lugar -->
+            <div class="wrap wrap--wide">
                 <div class="case__board">
                     <!-- Dibujo -->
                     <div class="case__stage">
-                        <div class="case__svg-scroll" id="pedigree"></div>
+                        <div class="case__drawing" id="pedigree"></div>
                         <ul class="legend">
                             <li>
                                 <svg viewBox="0 0 20 20" aria-hidden="true">
@@ -208,6 +214,14 @@
                     <!-- Relato. Sin JS se lee completo, de corrido. -->
                     <div class="case__panel">
                         <ul class="case__progress" id="case-progress" aria-hidden="true"></ul>
+
+                        <!-- Los botones van arriba del relato: los pasos tienen largos distintos y
+                             así no cambian de lugar. Sin JS no hacen nada, por eso el script los muestra. -->
+                        <div class="case__nav" id="case-nav" hidden>
+                            <button class="btn btn--ghost" id="case-prev" type="button">← Anterior</button>
+                            <button class="btn btn--primary" id="case-next" type="button">Siguiente →</button>
+                            <span class="case__count" id="case-count"></span>
+                        </div>
 
                         <div data-case-step>
                             <p class="case__step-n">Paso 01</p>
@@ -316,15 +330,11 @@
                             <p class="case__hypothesis"><span>Conducta</span>Estudio dirigido al paciente y
                                 asesoramiento a las mujeres de la rama materna.</p>
                         </div>
-
-                        <div class="case__nav">
-                            <button class="btn btn--ghost" id="case-prev" type="button">← Anterior</button>
-                            <button class="btn btn--primary" id="case-next" type="button">Siguiente →</button>
-                            <span class="case__count" id="case-count"></span>
-                        </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="wrap">
                 <p class="note" style="margin-top:2.5rem">
                     Armé una herramienta para dibujar árboles familiares con esta misma notación.
                     Es gratuita, funciona entera en tu navegador y podés exportar el resultado:
@@ -334,7 +344,7 @@
         </section>
 
         <!-- ============ Paisaje del genoma ============ -->
-        <section class="section" id="genoma">
+        <section class="section section--feature" id="genoma">
             <div class="wrap">
                 <p class="section__label">Paisaje del genoma</p>
                 <h2 class="section__title">El genoma humano, pintado como un rollo de tinta</h2>
@@ -343,9 +353,12 @@
                     los genes se amontonan y abajo corre el cromosoma con sus bandas. Se recorre de punta a
                     punta, del cromosoma 1 al Y, y se puede buscar un gen, una banda o una coordenada.
                 </p>
+            </div>
 
-                <!-- Captura del mismo paisaje, una por tema: se descarga solo la visible.
-                     El enlace abre el paisaje en ese lugar y con ese trazo. -->
+            <!-- Captura del mismo paisaje, una por tema: se descarga solo la visible.
+                 El enlace abre el paisaje en ese lugar y con ese trazo. Como el tablero
+                 del caso, sale del ancho del texto. -->
+            <div class="wrap wrap--wide">
                 <a class="genome__view" href="genoma/?semilla=tinta#chrX:149270000">
                     <img class="genome__img genome__img--light" src="genoma/vista-xq28-claro.webp"
                         width="1819" height="781" loading="lazy" decoding="async"
@@ -354,6 +367,9 @@
                         width="1819" height="781" loading="lazy" decoding="async"
                         alt="El final del cromosoma X en el paisaje: la doble hebra termina en el telómero y sobre Xq28, denso en genes, se levanta la montaña más alta. Abre el paisaje en ese lugar.">
                 </a>
+            </div>
+
+            <div class="wrap">
                 <p class="genome__caption">
                     Xq27–q28, el final del cromosoma X. Los pabellones marcan <em>FMR1</em>, <em>MECP2</em> y
                     <em>F8</em>, tres genes de herencia ligada al X.
@@ -407,16 +423,11 @@
                         <li><span class="k">Inglés</span><span class="v">C1</span></li>
                     </ul>
                 </div>
-            </div>
-        </section>
 
-        <!-- ============ Trayectoria ============ -->
-        <section class="section" id="trayectoria">
-            <div class="wrap">
-                <p class="section__label">Trayectoria</p>
-                <h2 class="section__title">Formación y ejercicio</h2>
+                <!-- Trayectoria: dentro del perfil, como una franja debajo -->
+                <div class="cv" id="trayectoria">
+                    <p class="section__label">Trayectoria</p>
 
-                <div class="cv">
                     <article class="cv__item">
                         <div class="cv__when">2024 — hoy</div>
                         <div class="cv__what">
