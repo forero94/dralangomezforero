@@ -1,0 +1,468 @@
+/* ============================================================
+   Paisaje del genoma — estilos propios de la página.
+   Hereda tokens y tipografías de ../styles.css. Los colores del
+   dibujo salen de los mismos tokens: landscape.js los lee y arma
+   la paleta del SVG, así el paisaje sigue al tema.
+
+   Sin JavaScript la página es un documento normal que explica qué
+   muestra; con JavaScript (.g-ready) pasa a ocupar la ventana.
+   ============================================================ */
+
+/* azul de las proteínas: el único color propio del paisaje */
+:root { --g-protein: #3d5a8c; }
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --g-protein: #93a9d8; }
+}
+
+:root[data-theme="dark"] { --g-protein: #93a9d8; }
+
+.g-ready,
+.g-ready body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+}
+
+.g-ready body {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+}
+
+/* ---------- Barra superior ---------- */
+
+.gbar {
+    position: relative;
+    z-index: 30;
+    flex: none;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+}
+
+.gbar__row {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    min-height: 3.5rem;
+    padding: .5rem clamp(.75rem, 2.5vw, 1.5rem);
+}
+
+.gbar__brand {
+    font-family: var(--font-display);
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.gbar__brand:hover { color: var(--accent); }
+
+.gbar__sep { color: var(--rule-strong); }
+
+.gbar__title {
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.gsearch {
+    display: flex;
+    gap: .4rem;
+    flex: 1 1 14rem;
+    max-width: 22rem;
+    margin-left: auto;
+}
+
+.gsearch__input { padding: .45rem .65rem; min-width: 0; }
+
+/* botones y campos: los mismos del constructor de árboles (../arbol/builder.css) */
+.tbtn {
+    font-family: inherit;
+    font-size: .85rem;
+    font-weight: 500;
+    padding: .55rem .6rem;
+    border-radius: .45rem;
+    border: 1px solid var(--rule-strong);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: center;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.tbtn:hover { background: var(--paper-sunken); border-color: var(--ink-muted); }
+
+.tbtn.is-on {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.field {
+    width: 100%;
+    font-family: inherit;
+    font-size: .9rem;
+    padding: .55rem .7rem;
+    border-radius: .45rem;
+    border: 1px solid var(--rule-strong);
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.field:focus { border-color: var(--accent); outline: none; }
+
+.gbar__tools { display: flex; align-items: center; gap: .4rem; }
+
+.gbar__group { display: inline-flex; gap: .25rem; }
+
+.gbar .tbtn { padding: .45rem .7rem; white-space: nowrap; }
+
+.gselect { width: auto; padding: .45rem .5rem; }
+
+.gbar__more { display: none; }
+
+@media (max-width: 70rem) {
+    .gbar__more { display: inline-flex; flex: none; }
+
+    .gbar__tools {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-wrap: wrap;
+        padding: .75rem clamp(.75rem, 2.5vw, 1.5rem);
+        background: var(--paper-raised);
+        border-bottom: 1px solid var(--rule);
+        box-shadow: var(--shadow);
+    }
+
+    .gbar__tools.is-open { display: flex; }
+}
+
+@media (max-width: 40rem) {
+    .gbar__row { gap: .5rem; }
+    .gbar__brand, .gbar__sep { display: none; }
+    .gsearch { flex-basis: 8rem; }
+}
+
+/* en pantallas muy angostas el título queda en el propio dibujo */
+@media (max-width: 26rem) {
+    .gbar__title {
+        position: absolute;
+        width: 1px; height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+}
+
+/* ---------- Lienzo ---------- */
+
+.gstage {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--paper);
+    background-image: var(--grain, none);
+    outline: none;
+}
+
+.g-ready .gstage {
+    flex: 1 1 auto;
+    min-height: 0;
+    touch-action: none;
+    cursor: grab;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.gstage:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+.g-ready .gstage.is-over { cursor: pointer; }
+.g-ready .gstage.is-dragging { cursor: grabbing; }
+
+.gstage > svg {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+}
+
+.gstage > svg.is-arriving { animation: g-arrive .5s ease-out; }
+
+@keyframes g-arrive {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* los polisomas flotan; con movimiento reducido, styles.css los deja quietos */
+.gstage .drift {
+    transform-box: fill-box;
+    animation: g-drift 7s ease-in-out infinite alternate;
+}
+
+@keyframes g-drift {
+    from { transform: translate(-3px, -2px) rotate(-1.5deg); }
+    to { transform: translate(4px, 3px) rotate(1.5deg); }
+}
+
+.gnoscript {
+    max-width: var(--measure);
+    margin: 0;
+    padding: 1.5rem clamp(.75rem, 2.5vw, 1.5rem);
+    color: var(--ink-soft);
+}
+
+/* ---------- Ficha del gen o la banda ---------- */
+
+.gtip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    max-width: 18rem;
+    padding: .65rem .8rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: .6rem;
+    box-shadow: var(--shadow);
+    font-size: .82rem;
+    line-height: 1.45;
+    pointer-events: none;
+}
+
+.gtip[hidden] { display: none; }
+.gtip p { margin: 0; }
+
+.gtip .gtip__name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: .15rem;
+}
+
+.gtip__meta { color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+
+.gtip__clin {
+    margin-top: .5rem;
+    padding-top: .5rem;
+    border-top: 1px solid var(--rule);
+}
+
+.gtip__cond { color: var(--ink-soft); }
+
+.gtip .gtip__inh {
+    margin-top: .2rem;
+    color: var(--accent);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+/* ---------- Avisos de la búsqueda ---------- */
+
+.gtoast {
+    position: absolute;
+    top: .75rem;
+    left: 50%;
+    z-index: 6;
+    transform: translateX(-50%);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .35rem;
+    width: max-content;
+    max-width: min(36rem, calc(100% - 1.5rem));
+    margin: 0;
+    padding: .55rem .85rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: .6rem;
+    box-shadow: var(--shadow);
+    font-size: .85rem;
+    color: var(--ink-soft);
+    cursor: auto;
+}
+
+.gtoast[hidden] { display: none; }
+
+.gtoast__pick {
+    font: inherit;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-wash);
+    border: 0;
+    border-radius: .35rem;
+    padding: .15rem .5rem;
+    cursor: pointer;
+}
+
+.gtoast__pick:hover { color: var(--accent-hover); }
+
+/* ---------- Pie: dónde estoy y el genoma entero ---------- */
+
+.gfoot {
+    flex: none;
+    display: grid;
+    grid-template-columns: 16rem minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+    padding: .45rem clamp(.75rem, 2.5vw, 1.5rem) .5rem;
+    background: var(--paper);
+    border-top: 1px solid var(--rule);
+}
+
+.gfoot__readout {
+    margin: 0;
+    font-size: .85rem;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gmini {
+    position: relative;
+    height: 34px;
+    cursor: pointer;
+    touch-action: none;
+}
+
+.gmini svg { display: block; overflow: visible; max-width: none; }
+
+.gmini .mo { fill: none; stroke: var(--ink-muted); stroke-width: .8; }
+.gmini .mb0 { fill: var(--paper-sunken); }
+.gmini .mb1 { fill: color-mix(in srgb, var(--ink) 25%, var(--paper)); }
+.gmini .mb2 { fill: color-mix(in srgb, var(--ink) 45%, var(--paper)); }
+.gmini .mb3 { fill: color-mix(in srgb, var(--ink) 65%, var(--paper)); }
+.gmini .mb4 { fill: color-mix(in srgb, var(--ink) 85%, var(--paper)); }
+.gmini .mb5 { fill: var(--accent); }
+.gmini .mb6 { fill: color-mix(in srgb, var(--ink) 15%, var(--paper)); }
+.gmini .mb7 { fill: color-mix(in srgb, var(--ink) 10%, var(--paper)); }
+
+.gmini .ml {
+    fill: var(--ink-muted);
+    font: 500 9px var(--font-body);
+    text-anchor: middle;
+}
+
+.gmini .mv {
+    fill: color-mix(in srgb, var(--accent) 16%, transparent);
+    stroke: var(--accent);
+    stroke-width: 1.5;
+}
+
+@media (max-width: 40rem) {
+    .gfoot { grid-template-columns: minmax(0, 1fr); gap: .15rem; }
+}
+
+/* ---------- Cómo leerlo ---------- */
+
+.ginfo {
+    padding: 1.25rem clamp(1rem, 4vw, 1.5rem) 2rem;
+    background: var(--paper-raised);
+    color: var(--ink-soft);
+    font-size: .92rem;
+    line-height: 1.6;
+}
+
+.ginfo:focus { outline: none; }
+
+.g-ready .ginfo {
+    position: fixed;
+    z-index: 60;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(26rem, 100%);
+    overflow-y: auto;
+    border-left: 1px solid var(--rule);
+    box-shadow: var(--shadow);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform .25s ease, visibility 0s linear .25s;
+}
+
+.g-ready .ginfo.is-open {
+    transform: none;
+    visibility: visible;
+    transition: transform .25s ease;
+}
+
+.ginfo__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: .75rem;
+}
+
+.ginfo__head .icon-btn { display: none; }
+.g-ready .ginfo__head .icon-btn { display: inline-flex; }
+
+.ginfo__title { font-size: 1.3rem; color: var(--ink); }
+
+.ginfo__keys { margin: 0; }
+.ginfo__keys dt { margin-top: .9rem; font-weight: 600; color: var(--ink); }
+.ginfo__keys dd { margin: .1rem 0 0; }
+
+.ginfo__sub {
+    margin: 1.6rem 0 .5rem;
+    font-family: var(--font-body);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+.ginfo__list { margin: 0; padding-left: 1.1rem; }
+.ginfo__list li { margin-bottom: .3rem; }
+
+.ginfo .ginfo__small { font-size: .82rem; color: var(--ink-muted); }
+
+/* ---------- Leyenda con los dibujos ---------- */
+
+.ginfo__colors { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .9rem; font-size: .85rem; }
+
+.sw {
+    display: inline-block;
+    width: .85rem;
+    height: .85rem;
+    border-radius: 50%;
+    margin-right: -.55rem;
+    vertical-align: -.1rem;
+}
+
+.sw--dna { background: color-mix(in srgb, var(--ink) 58%, var(--paper)); }
+.sw--rna { background: var(--accent); }
+.sw--prot { background: color-mix(in srgb, var(--g-protein) 55%, var(--paper)); border: 1px solid var(--g-protein); }
+
+.gloss { list-style: none; margin: 0; padding: 0; }
+
+.gloss li {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: .85rem;
+    align-items: start;
+    padding: .7rem 0;
+    border-bottom: 1px solid var(--rule);
+}
+
+.gloss li:last-child { border-bottom: 0; }
+
+.gloss p { margin: 0; font-size: .88rem; }
+.gloss strong { color: var(--ink); font-weight: 600; }
+
+.gloss__ico { display: block; }
+
+.gloss__ico svg {
+    display: block;
+    width: 4.5rem;
+    height: 3rem;
+    max-width: none;
+}

@@ -115,11 +115,16 @@ a:hover { color: var(--accent-hover); }
 
 html { scroll-behavior: smooth; }
 
+/* Sin transiciones en vez de transiciones cortas: con duración, todo elemento
+   transiciona cualquier propiedad (transition-property vale all por defecto) y
+   lo que se mide justo después de cambiar una clase todavía no cambió.
+   Las animaciones corren una sola vez: infinitas y cortas, tiemblan. */
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after {
         animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition: none !important;
     }
 }
 
@@ -250,6 +255,13 @@ html { scroll-behavior: smooth; }
 
 @media (max-width: 46rem) {
     .nav__links { display: none; }
+}
+
+/* El menú completo de la home deja de entrar en una línea cerca de los
+   805px, así que pasa antes a la hamburguesa. Los menús cortos, que no
+   tienen hamburguesa, siguen hasta 46rem. */
+@media (max-width: 52rem) {
+    .nav__bar:has(.nav__toggle) .nav__links { display: none; }
     .nav__toggle { display: inline-flex; }
 }
 
@@ -492,6 +504,35 @@ html { scroll-behavior: smooth; }
 }
 
 .ped-highlight.is-visible { opacity: 1; }
+
+/* ---------- Paisaje del genoma ---------- */
+/* La captura tiene el mismo papel que la página: va sin marco, y con los
+   costados esfumados para que el rollo parezca seguir de largo. */
+.genome__view { display: block; margin-top: 2.5rem; }
+
+.genome__img {
+    width: 100%;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
+/* Una captura por tema, con la misma lógica que los íconos del toggle */
+.genome__img--dark { display: none; }
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .genome__img--light { display: none; }
+    :root:not([data-theme="light"]) .genome__img--dark { display: block; }
+}
+
+:root[data-theme="dark"] .genome__img--light { display: none; }
+:root[data-theme="dark"] .genome__img--dark { display: block; }
+
+.genome__caption {
+    margin: .75rem 0 2rem;
+    font-size: .88rem;
+    color: var(--ink-muted);
+    max-width: var(--measure);
+}
 
 /* ---------- Tarjetas de desarrollo ---------- */
 .cards {
