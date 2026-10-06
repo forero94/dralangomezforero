@@ -12,7 +12,7 @@ Está dirigido a colegas, empleadores y potenciales colaboradores. No es un siti
 | `index.html` | Todo el contenido del sitio |
 | `styles.css` | Estilos. CSS a mano, sin frameworks. Tokens en `:root`, tema claro/oscuro |
 | `pedigree.js` | Árbol familiar interactivo del caso guiado |
-| `arbol/` | Constructor de árboles familiares |
+| `arbol/` | Constructor de árboles familiares. Compilado: la fuente está en `forero94/pedigree` |
 | `genoma/` | Paisaje del genoma: el genoma de referencia pintado como un rollo de tinta |
 | `helice.js`, `helice.css` | Hebra de tinta: la doble hebra del paisaje, de pie en el margen de la home |
 | `og.jpg` | Preview para redes (1200×630) |
@@ -23,9 +23,26 @@ Está dirigido a colegas, empleadores y potenciales colaboradores. No es un siti
 Ninguno. HTML, CSS y JavaScript sin dependencias ni paso de build — se publica tal cual en GitHub Pages.
 La única carga externa son las tipografías (Fraunces e Inter) desde Google Fonts.
 
+La excepción es `arbol/`: es una aplicación React que se compila en su propio repositorio
+(`forero94/pedigree`) y se copia acá ya compilada. No se edita a mano.
+
+## El constructor de árboles
+
+Para publicar una versión nueva, compilar en `forero94/pedigree` (`npm run build`) y, desde esta
+carpeta, reemplazar `arbol/` entera por el `dist/` de allá:
+
+```bash
+rm -rf arbol && cp -r <ruta a pedigree>/dist arbol
+```
+
+Va la carpeta entera porque los nombres de los archivos compilados cambian con cada versión. Como el
+resto del sitio, corre todo en el navegador: el árbol que se carga no sale del equipo. Solo tiene tema
+claro, porque el árbol se dibuja en blanco y negro.
+
 ## Desarrollo
 
-No hace falta servidor: alcanza con abrir `index.html` en el navegador. Para probarlo servido:
+No hace falta servidor: alcanza con abrir `index.html` en el navegador. La excepción es `arbol/`, que
+carga módulos de JavaScript y el navegador no los abre desde `file://`. Para probarlo servido:
 
 ```bash
 python -m http.server 8000

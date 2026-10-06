@@ -76,7 +76,7 @@
 
 .gsearch__input { padding: .45rem .65rem; min-width: 0; }
 
-/* botones y campos: los mismos del constructor de árboles (../arbol/builder.css) */
+/* botones y campos. La barra del constructor de árboles (arbol/) copia estos botones. */
 .tbtn {
     font-family: inherit;
     font-size: .85rem;
