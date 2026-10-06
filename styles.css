@@ -26,8 +26,6 @@
     /* Árbol familiar: el lenguaje canónico es blanco y negro */
     --ped-line: #43413a;
     --ped-fill: #16150f;
-    --ped-empty: #ffffff;
-    --ped-dim: #c9c5b9;
 
     --font-display: "Fraunces", Georgia, "Times New Roman", serif;
     --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -35,16 +33,13 @@
     --measure: 68ch;
     --gutter: clamp(1.25rem, 5vw, 3rem);
 
-    /* Movimiento: tres duraciones y dos curvas para todo el sitio.
-       La de salida arranca rápido y se asienta despacio: es la de lo que
-       aparece o responde a un gesto. La de ida y vuelta acelera y frena
-       parejo: es la de lo que se traslada, como el encuadre del caso
-       (pedigree.js lee --dur-slow; va en ms). */
+    /* Movimiento: una curva y dos duraciones para todo el sitio. La curva
+       arranca rápido y se asienta despacio, como lo que aparece o responde
+       a un gesto. El árbol del inicio tiene sus propios tiempos, trazo por
+       trazo (index.html). */
     --ease-out: cubic-bezier(.22, 1, .36, 1);
-    --ease-in-out: cubic-bezier(.45, 0, .55, 1);
     --dur-quick: 150ms;   /* respuesta a un gesto: hover, foco */
     --dur-base: 300ms;    /* cambio de estado, cambio de página */
-    --dur-slow: 500ms;    /* algo que entra o se revela */
 }
 
 /* ---------- Tokens: tema oscuro por preferencia del sistema ---------- */
@@ -69,8 +64,6 @@
 
         --ped-line: #cbc7bb;
         --ped-fill: #f2efe6;
-        --ped-empty: #14140f;
-        --ped-dim: #4a483d;
     }
 }
 
@@ -95,8 +88,6 @@
 
     --ped-line: #cbc7bb;
     --ped-fill: #f2efe6;
-    --ped-empty: #14140f;
-    --ped-dim: #4a483d;
 }
 
 /* ---------- Reset acotado ---------- */
@@ -178,8 +169,8 @@ html { scroll-behavior: smooth; }
 
 .wrap--narrow { max-width: 46rem; }
 
-/* Para piezas que salen del ancho del texto (el tablero del caso, la captura del
-   genoma). Con los mismos márgenes laterales: en pantallas chicas no cambia nada.
+/* Para piezas que salen del ancho del texto, como la captura del genoma. Con
+   los mismos márgenes laterales: en pantallas chicas no cambia nada.
    Salen 3rem por lado, lo justo para terminar donde empieza la hebra de tinta
    del margen (helice.css): si se ensancha, se le montan encima. */
 .wrap--wide { max-width: 68rem; }
@@ -462,94 +453,63 @@ html { scroll-behavior: smooth; }
 .btn--ghost { border-color: var(--rule-strong); color: var(--ink); background: transparent; }
 .btn--ghost:hover { background: var(--paper-sunken); color: var(--ink); border-color: var(--ink-muted); }
 
-.btn[disabled] { opacity: .38; cursor: not-allowed; }
-
-/* ---------- Caso interactivo ---------- */
+/* ---------- El caso ---------- */
+/* El razonamiento detrás del árbol del inicio, en el orden en que se dibuja */
 .case { background: var(--paper-sunken); }
 
-.case__intro { max-width: var(--measure); margin-bottom: 2.5rem; }
+.case__intro { max-width: var(--measure); }
 
-.case__thesis {
-    font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2.6vw, 1.5rem);
-    line-height: 1.4;
-    color: var(--ink);
-    border-left: 2px solid var(--accent);
-    padding-left: 1.25rem;
-    margin-bottom: 1.5rem;
-}
-
-.case__board {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    gap: clamp(1.5rem, 4vw, 2.75rem);
-    align-items: start;
-}
-
-/* minmax(0, …) y no 1fr: con 1fr la columna crece hasta el ancho mínimo de
-   su contenido y el tablero se sale de la pantalla. */
-@media (max-width: 56rem) {
-    .case__board { grid-template-columns: minmax(0, 1fr); }
-}
-
-.case__stage {
-    background: var(--paper-raised);
-    border: 1px solid var(--rule);
-    border-radius: .85rem;
-    padding: 1.25rem;
-    box-shadow: var(--shadow);
-}
-
-/* En el celular, cada píxel de ancho es dibujo */
-@media (max-width: 40rem) {
-    .case__stage { padding: .75rem; }
-}
-
-/* El aspecto se fija acá y el JS encuadra el viewBox para que coincida:
-   así la caja no cambia de alto entre pasos. El dibujo siempre entra en el
-   ancho disponible; lo que mantiene legible es la letra, que compensa la escala. */
-.case__drawing svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 800 / 470;
-}
-
-.case__panel { display: flex; flex-direction: column; gap: 1.25rem; }
-
-.case__progress {
+/* Leyenda de símbolos: para leer el árbol de arriba */
+.legend {
     display: flex;
-    gap: .3rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.case__progress li {
-    height: 3px;
-    flex: 1;
-    background: var(--rule-strong);
-    border-radius: 2px;
-    transition: background var(--dur-base) var(--ease-out);
-}
-
-.case__progress li.is-done { background: var(--accent); }
-
-.case__step-n {
-    font-size: .75rem;
-    font-weight: 600;
-    letter-spacing: .14em;
-    text-transform: uppercase;
+    flex-wrap: wrap;
+    gap: .5rem 1.25rem;
+    margin: 1.5rem 0 0;
+    padding: 1rem 0 0;
+    border-top: 1px solid var(--rule);
+    font-size: .78rem;
     color: var(--ink-muted);
+    list-style: none;
 }
 
-.case__step-title {
-    font-size: 1.35rem;
-    margin: .4rem 0 .75rem;
+.legend li { display: flex; align-items: center; gap: .4rem; }
+.legend svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* Los pasos: el número en el margen; al lado, lo que pasó y la hipótesis de
+   ese momento. El número comparte renglón con el título del paso. */
+.reasoning {
+    list-style: none;
+    max-width: var(--measure);
+    margin: clamp(2.5rem, 6vw, 3.5rem) 0 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(2rem, 5vw, 2.75rem);
+    counter-reset: paso;
 }
 
-.case__body { color: var(--ink-soft); }
-.case__body strong { color: var(--ink); font-weight: 600; }
+.reasoning__step {
+    counter-increment: paso;
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    column-gap: 1rem;
+}
+
+.reasoning__step > * { grid-column: 2; }
+
+.reasoning__step::before {
+    content: counter(paso, decimal-leading-zero);
+    grid-column: 1;
+    grid-row: 1;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--accent);
+}
+
+.reasoning__step h3 { font-size: 1.25rem; line-height: 1.35; margin-bottom: .6rem; }
+.reasoning__step p { color: var(--ink-soft); margin-bottom: .9rem; }
+.reasoning__step strong { color: var(--ink); font-weight: 600; }
 
 .case__hypothesis {
     background: var(--accent-wash);
@@ -568,98 +528,17 @@ html { scroll-behavior: smooth; }
     margin-bottom: .3rem;
 }
 
-.case__nav { display: flex; gap: .6rem; align-items: center; }
-.case__nav[hidden] { display: none; }
-.case__nav .btn, .case__count { white-space: nowrap; }
-
-/* En los teléfonos más angostos, los dos botones y el contador entran en una línea */
-@media (max-width: 24rem) {
-    .case__nav .btn { padding-inline: 1rem; }
+/* El remate del caso */
+.case__thesis {
+    max-width: var(--measure);
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+    line-height: 1.4;
+    color: var(--ink);
+    border-left: 2px solid var(--accent);
+    padding-left: 1.25rem;
 }
-.case__count { margin-left: auto; font-size: .85rem; color: var(--ink-muted); }
-
-/* Leyenda de símbolos */
-.legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem 1.25rem;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--rule);
-    font-size: .78rem;
-    color: var(--ink-muted);
-    list-style: none;
-}
-
-.legend li { display: flex; align-items: center; gap: .4rem; }
-.legend svg { width: 15px; height: 15px; flex-shrink: 0; }
-
-/* --- Elementos del árbol familiar --- */
-/* El encuadre cambia con cada paso y con el ancho de la pantalla. Los trazos no
-   escalan (siempre miden lo mismo en pantalla) y la letra de las etiquetas
-   divide por la escala que deja el JS en --ped-scale, así se ve a 11px. El tope
-   evita que en un celular las etiquetas tapen el dibujo. */
-.ped-line {
-    stroke: var(--ped-line);
-    stroke-width: 1.6;
-    fill: none;
-    vector-effect: non-scaling-stroke;
-}
-
-.ped-node .sym {
-    stroke: var(--ped-line);
-    stroke-width: 1.6;
-    fill: var(--ped-empty);
-    vector-effect: non-scaling-stroke;
-}
-
-.ped-node.is-affected .sym { fill: var(--ped-fill); }
-
-.ped-node .label {
-    font-family: var(--font-body);
-    font-size: min(22px, calc(11px / var(--ped-scale, 1)));
-    font-weight: 500;
-    fill: var(--ink-muted);
-    text-anchor: middle;
-    /* Contorno del color de la caja: se lee aunque cruce una línea */
-    paint-order: stroke;
-    stroke: var(--paper-raised);
-    stroke-width: .3em;
-    stroke-linejoin: round;
-}
-
-.ped-node.is-proband .label { fill: var(--accent); font-weight: 650; }
-
-.ped-deceased { stroke: var(--ped-line); stroke-width: 1.6; vector-effect: non-scaling-stroke; }
-.ped-carrier { fill: var(--ped-line); }
-.ped-proband-arrow { stroke: var(--accent); stroke-width: 1.8; fill: none; vector-effect: non-scaling-stroke; }
-.ped-proband-arrow-head { fill: var(--accent); }
-
-/* Aparición progresiva */
-.ped-node, .ped-line, .ped-carrier, .ped-proband-arrow, .ped-proband-arrow-head {
-    opacity: 0;
-    transition: opacity var(--dur-slow) var(--ease-out);
-}
-
-.ped-node.is-visible,
-.ped-line.is-visible,
-.ped-carrier.is-visible,
-.ped-proband-arrow.is-visible,
-.ped-proband-arrow-head.is-visible { opacity: 1; }
-
-/* Atenuar lo que no está en foco en el paso actual */
-.ped-node.is-visible.is-dimmed { opacity: .3; }
-
-.ped-highlight {
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 2;
-    vector-effect: non-scaling-stroke;
-    opacity: 0;
-    transition: opacity var(--dur-slow) var(--ease-out);
-}
-
-.ped-highlight.is-visible { opacity: 1; }
 
 /* ---------- Paisaje del genoma ---------- */
 /* La captura tiene el mismo papel que la página: va sin marco, y con los
@@ -851,8 +730,7 @@ html { scroll-behavior: smooth; }
    scroll, no un reloj: termina cuando el elemento ya subió un quinto de la
    pantalla, todo lo que quedó arriba está entero y un enlace a #perfil llega
    con la sección completa. Sin soporte (Firefox, por ahora), con movimiento
-   reducido o al imprimir, todo está quieto desde el principio.
-   El tablero del caso queda afuera: el JS lo mide. */
+   reducido o al imprimir, todo está quieto desde el principio. */
 @supports (animation-timeline: view()) {
     @media screen and (prefers-reduced-motion: no-preference) {
         .section__label,
@@ -861,6 +739,7 @@ html { scroll-behavior: smooth; }
         .case__thesis,
         .genome__view,
         .facts,
+        .reasoning__step,
         .cv__item,
         .card {
             animation: rise var(--ease-out) both;

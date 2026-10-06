@@ -36,8 +36,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="helice.css">
+    <!-- ?v=: GitHub Pages deja que el navegador guarde CSS y JS 10 minutos. Al cambiarlos,
+         subir el número: si no, el HTML nuevo se ve un rato con los estilos viejos. -->
+    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="helice.css?v=2">
 
     <script type="application/ld+json">
     {
@@ -141,15 +143,15 @@
                         <p class="hero__role">Residente de Genética Médica · CNGM</p>
                     </div>
 
-                    <!-- La pieza principal: el árbol del caso guiado, que se dibuja solo en el
+                    <!-- La pieza principal: el árbol del caso, que se dibuja solo en el
                          orden de los pasos. Del motivo de consulta a la hermana, la pregunta por
                          la rama materna que encuentra al tío y al primo, las portadoras, y al
                          final el aro sobre la hermana, que es a quien hay que asesorar.
-                         Mismas coordenadas que pedigree.js. Cada trazo arranca donde lo dejó el
-                         anterior; --d es cuándo empieza y --t cuánto tarda. Sin animación se ve
-                         entero. -->
+                         La sección «El caso» cuenta el razonamiento en el mismo orden. Cada trazo
+                         arranca donde lo dejó el anterior; --d es cuándo empieza y --t cuánto
+                         tarda. Sin animación se ve entero. -->
                     <svg class="hero__tree" viewBox="92 48 668 352" role="img"
-                        aria-label="Árbol familiar del caso guiado. El paciente, su tío materno y su primo materno son varones afectados; la abuela, la tía y la madre son portadoras obligadas, y la hermana es a quien hay que asesorar.">
+                        aria-label="Árbol familiar de un caso docente. El paciente, su tío materno y su primo materno son varones afectados; la abuela, la tía y la madre son portadoras obligadas, y la hermana es a quien hay que asesorar.">
                         <!-- 1. el motivo de consulta: los padres y el paciente -->
                         <path class="tr" pathLength="1" style="--d:0.16s" d="M600 193a17 17 0 1 1 0 34a17 17 0 1 1 0 -34" />
                         <path class="tr" pathLength="1" style="--d:0.24s" d="M703 210v-17h34v34h-34z" />
@@ -209,186 +211,113 @@
             </div>
         </header>
 
-        <!-- ============ Caso interactivo ============ -->
+        <!-- ============ El caso ============ -->
+        <!-- El razonamiento detrás del árbol del inicio, en el mismo orden en que se dibuja -->
         <section class="section section--feature case" id="caso">
             <div class="wrap">
-                <p class="section__label">Caso guiado</p>
+                <p class="section__label">El caso</p>
                 <h2 class="section__title">Un caso que parecía aislado</h2>
 
                 <div class="case__intro">
-                    <p class="case__thesis">
-                        Ver que hay un problema no siempre es fácil, y todavía menos saber cómo y a quién
-                        estudiar. Por eso son tan importantes la entrevista y el árbol familiar.
+                    <p class="lead">
+                        El árbol de arriba se dibuja en el orden en que lo armé en la consulta, y cada trazo
+                        nuevo cambió la hipótesis. Es un caso docente: no corresponde a ningún paciente real.
                     </p>
-                    <p>
-                        Este es un caso docente: el árbol familiar se construye paso a paso, igual que en la
-                        consulta, y cada dato nuevo cambia la hipótesis. No corresponde a ningún paciente real.
-                    </p>
+                    <ul class="legend" aria-label="Cómo leer el árbol">
+                        <li>
+                            <svg viewBox="0 0 20 20" aria-hidden="true">
+                                <rect x="2" y="2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" />
+                            </svg>Varón
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" aria-hidden="true">
+                                <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6" />
+                            </svg>Mujer
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" aria-hidden="true">
+                                <rect x="2" y="2" width="16" height="16" fill="currentColor" />
+                            </svg>Afectado
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" aria-hidden="true">
+                                <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6" />
+                                <circle cx="10" cy="10" r="3" fill="currentColor" />
+                            </svg>Portadora
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" aria-hidden="true">
+                                <rect x="3" y="3" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" />
+                                <line x1="1" y1="19" x2="19" y2="1" stroke="currentColor" stroke-width="1.6" />
+                            </svg>Fallecido
+                        </li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- El tablero sale del ancho del texto: el árbol completo necesita lugar -->
-            <div class="wrap wrap--wide">
-                <div class="case__board">
-                    <!-- Dibujo -->
-                    <div class="case__stage">
-                        <div class="case__drawing" id="pedigree"></div>
-                        <ul class="legend">
-                            <li>
-                                <svg viewBox="0 0 20 20" aria-hidden="true">
-                                    <rect x="2" y="2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" />
-                                </svg>Varón
-                            </li>
-                            <li>
-                                <svg viewBox="0 0 20 20" aria-hidden="true">
-                                    <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6" />
-                                </svg>Mujer
-                            </li>
-                            <li>
-                                <svg viewBox="0 0 20 20" aria-hidden="true">
-                                    <rect x="2" y="2" width="16" height="16" fill="currentColor" />
-                                </svg>Afectado
-                            </li>
-                            <li>
-                                <svg viewBox="0 0 20 20" aria-hidden="true">
-                                    <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6" />
-                                    <circle cx="10" cy="10" r="3" fill="currentColor" />
-                                </svg>Portadora
-                            </li>
-                            <li>
-                                <svg viewBox="0 0 20 20" aria-hidden="true">
-                                    <rect x="3" y="3" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" />
-                                    <line x1="1" y1="19" x2="19" y2="1" stroke="currentColor" stroke-width="1.6" />
-                                </svg>Fallecido
-                            </li>
-                        </ul>
-                    </div>
+                <ol class="reasoning">
+                    <li class="reasoning__step">
+                        <h3>El motivo de consulta</h3>
+                        <p>
+                            Varón de 5 años con retraso global del desarrollo, sobre todo del lenguaje, sin rasgos
+                            que orienten a un síndrome conocido. Padres jóvenes y sanos, sin parentesco entre sí, y
+                            una hermana de 8 años sana. La familia lo presenta como <strong>el único caso</strong>.
+                        </p>
+                        <p class="case__hypothesis"><span>Hipótesis</span>Caso aislado: una mutación nueva, que no
+                            vendría de los padres.</p>
+                    </li>
 
-                    <!-- Relato. Sin JS se lee completo, de corrido. -->
-                    <div class="case__panel">
-                        <ul class="case__progress" id="case-progress" aria-hidden="true"></ul>
+                    <li class="reasoning__step">
+                        <h3>La pregunta que cambia el caso</h3>
+                        <p>
+                            No pregunto «¿hay alguien más afectado en la familia?»: esa pregunta casi siempre se
+                            responde que no. Pregunto por <strong>cada hermano de la madre, uno por uno</strong>.
+                        </p>
+                        <p>
+                            Aparece un tío materno que murió a los 19 años con «retraso madurativo» y nunca fue
+                            estudiado. Y una tía materna cuyo hijo tiene retraso del desarrollo, en seguimiento
+                            por neurología y sin diagnóstico. La familia no los relacionaba con el nene.
+                        </p>
+                        <p class="case__hypothesis"><span>Hipótesis</span>Ya no es esporádico. Entra la herencia
+                            mendeliana.</p>
+                    </li>
 
-                        <!-- Los botones van arriba del relato: los pasos tienen largos distintos y
-                             así no cambian de lugar. Sin JS no hacen nada, por eso el script los muestra. -->
-                        <div class="case__nav" id="case-nav" hidden>
-                            <button class="btn btn--ghost" id="case-prev" type="button">← Anterior</button>
-                            <button class="btn btn--primary" id="case-next" type="button">Siguiente →</button>
-                            <span class="case__count" id="case-count"></span>
-                        </div>
+                    <li class="reasoning__step">
+                        <h3>El patrón</h3>
+                        <p>
+                            Tres varones afectados, en tres ramas distintas, conectados entre sí <strong>solo a
+                            través de mujeres sanas</strong>. Ninguna mujer afectada, ninguna transmisión de padre
+                            a hijo varón.
+                        </p>
+                        <p>
+                            Eso es herencia recesiva ligada al X, y convierte a la abuela, la tía y la madre en
+                            portadoras obligadas: lo sé por su lugar en el árbol, sin necesidad de estudiarlas.
+                        </p>
+                        <p class="case__hypothesis"><span>Hipótesis</span>Recesiva ligada al X.</p>
+                    </li>
 
-                        <div data-case-step>
-                            <p class="case__step-n">Paso 01</p>
-                            <h3 class="case__step-title">El motivo de consulta</h3>
-                            <div class="case__body">
-                                <p>
-                                    Varón de 5 años derivado por retraso global del desarrollo, con compromiso
-                                    predominante del lenguaje. Sin rasgos físicos que orienten a un síndrome
-                                    conocido. Padres jóvenes, sanos, sin parentesco entre sí.
-                                </p>
-                                <p>La familia lo presenta como <strong>el único caso</strong>.</p>
-                            </div>
-                            <p class="case__hypothesis"><span>Hipótesis</span>Caso aislado: una mutación nueva,
-                                que no vendría de los padres.</p>
-                        </div>
+                    <li class="reasoning__step">
+                        <h3>Qué cambia, en concreto</h3>
+                        <p>
+                            <strong>La estrategia.</strong> El estudio se orienta al cromosoma X y el resultado se
+                            interpreta contra una hipótesis previa, no a ciegas. Una variante dudosa deja de ser
+                            dudosa cuando el árbol ya predijo dónde buscarla.
+                        </p>
+                        <p>
+                            <strong>Y sobre todo, la hermana.</strong> Tiene 50% de probabilidad de ser portadora
+                            y está entrando en edad reproductiva. Nadie la había mencionado como parte del caso:
+                            vino acompañando.
+                        </p>
+                        <p class="case__hypothesis"><span>Conducta</span>Estudio dirigido al paciente y
+                            asesoramiento a las mujeres de la rama materna.</p>
+                    </li>
+                </ol>
 
-                        <div data-case-step>
-                            <p class="case__step-n">Paso 02</p>
-                            <h3 class="case__step-title">La hermana</h3>
-                            <div class="case__body">
-                                <p>
-                                    Tiene una hermana de 8 años, sana, con escolaridad y desarrollo normales.
-                                </p>
-                                <p>
-                                    Todavía nada rompe la hipótesis inicial. Pero ya sé a quién voy a tener que
-                                    asesorar si esto termina siendo hereditario, y por eso entra al árbol desde
-                                    el principio.
-                                </p>
-                            </div>
-                            <p class="case__hypothesis"><span>Hipótesis</span>Sin cambios. Sigue pareciendo
-                                esporádico.</p>
-                        </div>
+                <p class="case__thesis">
+                    El exoma del paciente habría encontrado la misma variante. Pero el motivo por el cual hay
+                    que citar a la hermana sale del árbol, no del informe.
+                </p>
 
-                        <div data-case-step>
-                            <p class="case__step-n">Paso 03</p>
-                            <h3 class="case__step-title">La pregunta que cambia el caso</h3>
-                            <div class="case__body">
-                                <p>
-                                    No pregunto «¿hay alguien más afectado en la familia?». Esa pregunta casi
-                                    siempre se responde que no. Pregunto por <strong>cada hermano de la madre,
-                                    uno por uno</strong>.
-                                </p>
-                                <p>
-                                    Aparece un tío materno fallecido a los 19 años, con «retraso madurativo»,
-                                    que nunca fue estudiado. La familia no lo había mencionado porque no lo
-                                    relacionaba con el nene.
-                                </p>
-                            </div>
-                            <p class="case__hypothesis"><span>Hipótesis</span>Ya no es esporádico. Entra herencia
-                                mendeliana.</p>
-                        </div>
-
-                        <div data-case-step>
-                            <p class="case__step-n">Paso 04</p>
-                            <h3 class="case__step-title">Los primos</h3>
-                            <div class="case__body">
-                                <p>
-                                    La rama materna sigue dando. Una tía materna tiene un hijo varón, también con
-                                    retraso del desarrollo, en seguimiento por neurología y sin diagnóstico.
-                                </p>
-                                <p>
-                                    Las mujeres de la familia —abuela, tía, madre, hermana— están todas sanas.
-                                </p>
-                            </div>
-                            <p class="case__hypothesis"><span>Hipótesis</span>Tres varones afectados, ninguna mujer,
-                                todos por línea materna.</p>
-                        </div>
-
-                        <div data-case-step>
-                            <p class="case__step-n">Paso 05</p>
-                            <h3 class="case__step-title">El patrón</h3>
-                            <div class="case__body">
-                                <p>
-                                    Tres varones afectados, en tres ramas distintas, conectados entre sí
-                                    <strong>solo a través de mujeres sanas</strong>. Ninguna mujer afectada.
-                                    Ninguna transmisión de padre a hijo varón.
-                                </p>
-                                <p>
-                                    Eso es <strong>herencia recesiva ligada al X</strong>. Y convierte a la abuela,
-                                    a la tía y a la madre en portadoras obligadas: lo sé por posición en el árbol,
-                                    sin necesidad de estudiarlas.
-                                </p>
-                            </div>
-                            <p class="case__hypothesis"><span>Hipótesis</span>Recesiva ligada al X.</p>
-                        </div>
-
-                        <div data-case-step>
-                            <p class="case__step-n">Paso 06</p>
-                            <h3 class="case__step-title">Qué cambió, en concreto</h3>
-                            <div class="case__body">
-                                <p>
-                                    <strong>La estrategia.</strong> El estudio se orienta al cromosoma X y el
-                                    resultado se interpreta contra una hipótesis previa, no a ciegas. Una variante
-                                    dudosa deja de ser dudosa cuando el árbol ya predijo dónde buscarla.
-                                </p>
-                                <p>
-                                    <strong>Y sobre todo, la hermana.</strong> Tiene 50% de probabilidad de ser
-                                    portadora y está entrando en edad reproductiva. Nadie la había mencionado
-                                    como parte del caso: vino acompañando.
-                                </p>
-                                <p>
-                                    El exoma del paciente habría encontrado la misma variante. Pero el motivo por
-                                    el cual hay que citarla a ella sale del árbol, no del informe.
-                                </p>
-                            </div>
-                            <p class="case__hypothesis"><span>Conducta</span>Estudio dirigido al paciente y
-                                asesoramiento a las mujeres de la rama materna.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wrap">
-                <p class="note" style="margin-top:2.5rem">
+                <p class="note">
                     Armé una herramienta para dibujar árboles familiares con esta misma notación.
                     Es gratuita, funciona entera en tu navegador y podés exportar el resultado:
                     <a href="arbol/">probala acá</a>.
@@ -409,8 +338,8 @@
             </div>
 
             <!-- Captura del mismo paisaje, una por tema: se descarga solo la visible.
-                 El enlace abre el paisaje en ese lugar y con ese trazo. Como el tablero
-                 del caso, sale del ancho del texto. -->
+                 El enlace abre el paisaje en ese lugar y con ese trazo. Sale del ancho
+                 del texto. -->
             <div class="wrap wrap--wide">
                 <a class="genome__view" href="genoma/?semilla=tinta#chrX:149270000">
                     <img class="genome__img genome__img--light" src="genoma/vista-xq28-claro.webp"
@@ -603,8 +532,7 @@
         <a class="helix__seal" href="genoma/" title="Recorrer el paisaje del genoma">ADN</a>
     </div>
 
-    <script src="pedigree.js" defer></script>
-    <script src="helice.js" defer></script>
+    <script src="helice.js?v=2" defer></script>
     <script>
         // Tema: alterna y recuerda la elección
         (function () {
@@ -652,8 +580,8 @@
         }());
 
         // Árbol del inicio: deja la escala del dibujo en --tree-scale para que la
-        // letra y los trazos se vean del mismo tamaño en cualquier ancho (como
-        // --ped-scale en el caso). Sin esto queda la escala de la pantalla ancha.
+        // letra y los trazos se vean del mismo tamaño en cualquier ancho. Sin esto
+        // queda la escala de la pantalla ancha.
         (function () {
             var tree = document.querySelector('.hero__tree');
             if (!tree || !window.ResizeObserver) { return; }

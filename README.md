@@ -11,7 +11,6 @@ Está dirigido a colegas, empleadores y potenciales colaboradores. No es un siti
 |---|---|
 | `index.html` | Todo el contenido del sitio |
 | `styles.css` | Estilos. CSS a mano, sin frameworks. Tokens en `:root`, tema claro/oscuro |
-| `pedigree.js` | Árbol familiar interactivo del caso guiado |
 | `arbol/` | Constructor de árboles familiares. Compilado: la fuente está en `forero94/pedigree` |
 | `genoma/` | Paisaje del genoma: el genoma de referencia pintado como un rollo de tinta |
 | `helice.js`, `helice.css` | Hebra de tinta: la doble hebra del paisaje, de pie en el margen de la home |
@@ -48,14 +47,20 @@ carga módulos de JavaScript y el navegador no los abre desde `file://`. Para pr
 python -m http.server 8000
 ```
 
-## El caso guiado
+GitHub Pages deja que el navegador guarde el CSS y el JS 10 minutos. Por eso `index.html` los enlaza con
+`?v=N`: al cambiar `styles.css`, `helice.css` o `helice.js`, subir ese número. Si no, quien vuelva al
+sitio ve un rato el HTML nuevo con los estilos viejos.
 
-`pedigree.js` dibuja un árbol familiar de tres generaciones y lo revela por pasos. Los datos del árbol
-(`NODES`, `LINKS`) y qué se ve en cada paso (`STEPS`) están separados del dibujo, así que agregar
-personas o pasos no toca la lógica de render.
+## El árbol del inicio y el caso
 
-El texto de cada paso vive en el HTML, no en el JS: sin JavaScript el caso se lee igual como artículo
-y queda indexable.
+El inicio lo ocupa el árbol familiar de un caso docente, que se dibuja solo. Es un SVG escrito en
+`index.html` y la animación es CSS: cada trazo lleva en `--d` cuándo empieza y en `--t` cuánto tarda, y
+`pathLength="1"` permite dibujarlo corriendo el guion de 1 a 0. El orden de los trazos es el del
+razonamiento. Un script corto deja la escala del dibujo en `--tree-scale`, así la letra y los trazos se
+ven del mismo tamaño en cualquier ancho. Con movimiento reducido el árbol aparece entero.
+
+La sección «El caso» cuenta ese razonamiento en texto y en el mismo orden, con la leyenda de símbolos
+para leer el árbol.
 
 > El caso es material docente. No corresponde a ningún paciente real.
 
