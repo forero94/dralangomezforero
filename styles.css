@@ -317,48 +317,34 @@ html { scroll-behavior: smooth; }
 /* ---------- Hero ---------- */
 .hero { padding-block: clamp(3.5rem, 9vw, 6.5rem); }
 
+/* La pieza principal es el árbol: el nombre arriba, los botones abajo y la
+   foto al costado. En el celular la foto va al lado del nombre, como una
+   ficha, y el árbol ocupa todo el ancho. */
 .hero__grid {
-    --hero-gap: clamp(2rem, 5vw, 4rem);
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas: "text portrait";
-    gap: var(--hero-gap);
+    grid-template-areas:
+        "byline portrait"
+        "tree   portrait"
+        "cta    portrait";
+    gap: 2rem clamp(2rem, 5vw, 4rem);
     align-items: center;
 }
 
-.hero__text { grid-area: text; }
-
-.hero__byline {
-    line-height: 1.4;
-    margin-bottom: 1.5rem;
-}
+.hero__byline { grid-area: byline; }
 
 .hero__name {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 600;
-    letter-spacing: -.01em;
-    color: var(--ink);
+    font-size: clamp(1.45rem, 3.4vw, 2.1rem);
+    letter-spacing: -.015em;
+    margin-bottom: .35rem;
 }
 
 .hero__role {
-    display: block;
     font-size: .95rem;
     color: var(--ink-muted);
 }
 
-.hero h1 {
-    font-size: clamp(2.25rem, 6vw, 3.6rem);
-    margin-bottom: 1.25rem;
-}
-
-.hero__sub {
-    font-size: 1.15rem;
-    color: var(--ink-soft);
-    max-width: 34ch;
-    margin-bottom: 1.75rem;
-}
+.hero__cta { grid-area: cta; }
 
 /* La foto ya viene en 3:4, el mismo aspecto de la caja: no se recorta.
    Las esquinas son las de las tarjetas. */
@@ -375,46 +361,36 @@ html { scroll-behavior: smooth; }
 @media (max-width: 46rem) {
     .hero__grid {
         grid-template-columns: auto minmax(0, 1fr);
-        grid-template-areas: "portrait tree" "text text";
+        grid-template-areas:
+            "portrait byline"
+            "tree     tree"
+            "cta      cta";
+        column-gap: 1.25rem;
     }
-    .hero__portrait { width: 7.5rem; }
-    .hero__sub { max-width: none; }
+    .hero__portrait { width: 6.5rem; }
 }
 
 /* ---------- Árbol del inicio ---------- */
-/* Va donde hay lugar libre: en pantalla ancha, en la franja entre el texto y
-   la foto, a la altura del subtítulo y los botones (desde 62rem el texto ya
-   no cambia de ancho y la franja mide siempre lo mismo); en el celular, al
-   lado de la foto. En el medio no entra sin pisar el texto, y no está. */
-.hero__tree { display: none; }
-
-@media (min-width: 62rem) {
-    .hero__tree {
-        display: block;
-        grid-area: text;
-        justify-self: end;
-        align-self: end;
-        width: 9rem;
-        translate: calc(var(--hero-gap) / 2) 0;
-    }
-}
-
-@media (max-width: 46rem) {
-    .hero__tree {
-        display: block;
-        grid-area: tree;
-        justify-self: center;
-        width: min(9rem, 100%);
-    }
+/* El encuadre es el de la pantalla ancha; en el celular las etiquetas de las
+   puntas se salen unos píxeles hacia el margen, y por eso no se recorta. */
+.hero__tree {
+    grid-area: tree;
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 668 / 352;
+    overflow: visible;
 }
 
 /* Los trazos: pathLength="1" en cada uno, así un mismo guion de largo 1 lo
-   cubre entero y correrlo de 1 a 0 lo dibuja de punta a punta. El grosor
-   está pensado para el ancho de 9rem: ahí da el 1,5px de los trazos del caso. */
+   cubre entero y correrlo de 1 a 0 lo dibuja de punta a punta. Grosor y letra
+   dividen por la escala que deja el script en --tree-scale, como en el caso:
+   se ven a 1,6px y 12px en cualquier ancho. El tope de la letra evita que en
+   los celulares más angostos se toquen «Hermana» y «Paciente». */
 .hero__tree .tr {
     fill: none;
     stroke: var(--ped-line);
-    stroke-width: 2.6;
+    stroke-width: calc(1.6px / var(--tree-scale, .84));
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 1;
@@ -435,8 +411,29 @@ html { scroll-behavior: smooth; }
     animation: tree-dot var(--t, .35s) var(--ease-out) var(--d, 0s) both;
 }
 
-.hero__tree .tr--proband { stroke: var(--accent); }
-.hero__tree .tf--proband { fill: var(--accent); }
+/* Contorno del color del papel: el nombre se lee aunque cruce una línea */
+.hero__tree .tl {
+    font-family: var(--font-body);
+    font-size: min(26px, calc(12px / var(--tree-scale, .84)));
+    font-weight: 500;
+    fill: var(--ink-muted);
+    text-anchor: middle;
+    paint-order: stroke;
+    stroke: var(--paper);
+    stroke-width: .3em;
+    stroke-linejoin: round;
+    animation: tree-ink var(--t, .3s) var(--ease-out) var(--d, 0s) both;
+}
+
+/* en el celular los símbolos se achican más que la letra: un punto menos */
+@media (max-width: 46rem) {
+    .hero__tree .tl { font-size: min(26px, calc(11px / var(--tree-scale, .84))); }
+}
+
+/* la flecha del paciente y el aro de la hermana */
+.hero__tree .tr--accent { stroke: var(--accent); stroke-width: calc(1.8px / var(--tree-scale, .84)); }
+.hero__tree .tf--accent { fill: var(--accent); }
+.hero__tree .tl--proband { fill: var(--accent); font-weight: 650; }
 
 @keyframes tree-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes tree-ink { from { opacity: 0; } }

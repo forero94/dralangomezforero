@@ -136,53 +136,72 @@
         <header class="hero">
             <div class="wrap">
                 <div class="hero__grid">
-                    <div class="hero__text">
-                        <p class="hero__byline">
-                            <span class="hero__name">Dr. Alan Gómez Forero</span>
-                            <span class="hero__role">Residente de Genética Médica · CNGM</span>
-                        </p>
-                        <h1>El árbol familiar decide antes que el laboratorio</h1>
-                        <p class="hero__sub">
-                            Diagnostico enfermedades poco frecuentes, asesoro familias y llevo tecnología nueva
-                            a la consulta.
-                        </p>
-                        <div class="btn-row">
-                            <a class="btn btn--primary" href="#caso">Ver cómo razono un caso</a>
-                            <a class="btn btn--ghost" href="#contacto">Escribime</a>
-                        </div>
+                    <div class="hero__byline">
+                        <h1 class="hero__name">Dr. Alan Gómez Forero</h1>
+                        <p class="hero__role">Residente de Genética Médica · CNGM</p>
                     </div>
-                    <!-- La familia del caso en miniatura. Se dibuja sola en el orden de los
-                         pasos: el motivo de consulta, la hermana, la pregunta hacia arriba que
-                         encuentra al tío, las portadoras y al final la flecha del paciente.
-                         Cada trazo arranca donde lo dejó el anterior; --d es cuándo empieza y
-                         --t cuánto tarda. Sin animación se ve entero. -->
-                    <svg class="hero__tree" viewBox="17 13 250 239" aria-hidden="true" focusable="false">
-                        <!-- motivo de consulta: los padres y el paciente -->
-                        <path class="tr" pathLength="1" style="--d:.2s" d="M170 107a13 13 0 1 1 0 26a13 13 0 1 1 0-26" />
-                        <path class="tr" pathLength="1" style="--d:.3s" d="M237 120v-13h26v26h-26z" />
-                        <path class="tr" pathLength="1" style="--d:.55s;--t:.25s" d="M183 120H237" />
-                        <path class="tr" pathLength="1" style="--d:.75s;--t:.35s" d="M210 120V170H250V197" />
-                        <rect class="tf" style="--d:1.2s" x="237" y="197" width="26" height="26" />
-                        <path class="tr" pathLength="1" style="--d:.95s" d="M250 197h13v26h-26v-26z" />
-                        <!-- la hermana -->
-                        <path class="tr" pathLength="1" style="--d:1.15s;--t:.3s" d="M210 170H170V197" />
-                        <path class="tr" pathLength="1" style="--d:1.35s" d="M170 197a13 13 0 1 1 0 26a13 13 0 1 1 0-26" />
-                        <!-- la pregunta por la rama materna: los abuelos y el tío -->
-                        <path class="tr" pathLength="1" style="--d:1.65s;--t:.45s" d="M170 107V80H110V30" />
-                        <path class="tr" pathLength="1" style="--d:2s;--t:.2s" d="M83 30H137" />
-                        <path class="tr" pathLength="1" style="--d:2.05s" d="M83 30v13h-26v-26h26z" />
-                        <path class="tr" pathLength="1" style="--d:2.05s" d="M137 30a13 13 0 1 1 26 0a13 13 0 1 1-26 0" />
-                        <path class="tr" pathLength="1" style="--d:2.1s;--t:.35s" d="M110 80H40V107" />
-                        <rect class="tf" style="--d:2.65s" x="27" y="107" width="26" height="26" />
-                        <path class="tr" pathLength="1" style="--d:2.4s" d="M40 107h13v26h-26v-26z" />
-                        <path class="tr" pathLength="1" style="--d:2.75s;--t:.25s" d="M21 139L59 101" />
-                        <!-- el patrón: abuela y madre, portadoras obligadas -->
-                        <circle class="tc" style="--d:3s" cx="150" cy="30" r="4" />
-                        <circle class="tc" style="--d:3.1s" cx="170" cy="120" r="4" />
-                        <!-- el paciente que consulta -->
-                        <path class="tr tr--proband" pathLength="1" style="--d:3.35s;--t:.3s" d="M212 248L228.3 231.7" />
-                        <path class="tf tf--proband" style="--d:3.55s;--t:.2s" d="M234 226L231.5 234.8L225.2 228.5z" />
+
+                    <!-- La pieza principal: el árbol del caso guiado, que se dibuja solo en el
+                         orden de los pasos. Del motivo de consulta a la hermana, la pregunta por
+                         la rama materna que encuentra al tío y al primo, las portadoras, y al
+                         final el aro sobre la hermana, que es a quien hay que asesorar.
+                         Mismas coordenadas que pedigree.js. Cada trazo arranca donde lo dejó el
+                         anterior; --d es cuándo empieza y --t cuánto tarda. Sin animación se ve
+                         entero. -->
+                    <svg class="hero__tree" viewBox="92 48 668 352" role="img"
+                        aria-label="Árbol familiar del caso guiado. El paciente, su tío materno y su primo materno son varones afectados; la abuela, la tía y la madre son portadoras obligadas, y la hermana es a quien hay que asesorar.">
+                        <!-- 1. el motivo de consulta: los padres y el paciente -->
+                        <path class="tr" pathLength="1" style="--d:0.16s" d="M600 193a17 17 0 1 1 0 34a17 17 0 1 1 0 -34" />
+                        <path class="tr" pathLength="1" style="--d:0.24s" d="M703 210v-17h34v34h-34z" />
+                        <path class="tr" pathLength="1" style="--d:0.48s;--t:0.25s" d="M617 210H703" />
+                        <path class="tr" pathLength="1" style="--d:0.64s;--t:0.4s" d="M660 210V290H720V333" />
+                        <rect class="tf" style="--d:1.12s" x="703" y="333" width="34" height="34" />
+                        <path class="tr" pathLength="1" style="--d:0.88s" d="M720 333h17v34h-34v-34z" />
+                        <path class="tr tr--accent" pathLength="1" style="--d:1.2s;--t:0.3s" d="M685 379L700 364" />
+                        <path class="tf tf--accent" style="--d:1.4s;--t:0.2s" d="M700 364L692 366L698 372z" />
+                        <!-- 2. la hermana -->
+                        <path class="tr" pathLength="1" style="--d:1.6s;--t:0.3s" d="M660 290H600V333" />
+                        <path class="tr" pathLength="1" style="--d:1.8s" d="M600 333a17 17 0 1 1 0 34a17 17 0 1 1 0 -34" />
+                        <!-- 3. la pregunta por cada hermano de la madre: los abuelos y el tío -->
+                        <path class="tr" pathLength="1" style="--d:2.24s;--t:0.55s" d="M600 193V150H360V70" />
+                        <path class="tr" pathLength="1" style="--d:2.64s;--t:0.2s" d="M360 70H317" />
+                        <path class="tr" pathLength="1" style="--d:2.64s;--t:0.2s" d="M360 70H403" />
+                        <path class="tr" pathLength="1" style="--d:2.76s" d="M317 70v17h-34v-34h34z" />
+                        <path class="tr" pathLength="1" style="--d:2.76s" d="M403 70a17 17 0 1 1 34 0a17 17 0 1 1 -34 0" />
+                        <path class="tr" pathLength="1" style="--d:2.8s;--t:0.45s" d="M360 150H140V193" />
+                        <rect class="tf" style="--d:3.32s" x="123" y="193" width="34" height="34" />
+                        <path class="tr" pathLength="1" style="--d:3.12s" d="M140 193h17v34h-34v-34z" />
+                        <path class="tr" pathLength="1" style="--d:3.4s;--t:0.25s" d="M116 234L164 186" />
+                        <!-- 4. los primos -->
+                        <path class="tr" pathLength="1" style="--d:3.6s;--t:0.2s" d="M320 150V193" />
+                        <path class="tr" pathLength="1" style="--d:3.72s" d="M320 193a17 17 0 1 1 0 34a17 17 0 1 1 0 -34" />
+                        <path class="tr" pathLength="1" style="--d:3.92s;--t:0.2s" d="M337 210H423" />
+                        <path class="tr" pathLength="1" style="--d:4.04s" d="M423 210v-17h34v34h-34z" />
+                        <path class="tr" pathLength="1" style="--d:4.12s;--t:0.35s" d="M380 210V333" />
+                        <rect class="tf" style="--d:4.56s" x="363" y="333" width="34" height="34" />
+                        <path class="tr" pathLength="1" style="--d:4.36s" d="M380 333h17v34h-34v-34z" />
+                        <!-- los nombres van encima de las líneas -->
+                        <text class="tl" style="--d:0.36s" x="600" y="236" dy="1em">Madre</text>
+                        <text class="tl" style="--d:0.44s" x="720" y="236" dy="1em">Padre</text>
+                        <text class="tl tl--proband" style="--d:1.08s" x="720" y="376" dy="1em">Paciente</text>
+                        <text class="tl" style="--d:1.96s" x="600" y="376" dy="1em">Hermana</text>
+                        <text class="tl" style="--d:2.92s" x="300" y="96" dy="1em">Abuelo</text>
+                        <text class="tl" style="--d:2.92s" x="420" y="96" dy="1em">Abuela</text>
+                        <text class="tl" style="--d:3.28s" x="140" y="236" dy="1em">Tío materno</text>
+                        <text class="tl" style="--d:3.88s" x="320" y="236" dy="1em">Tía materna</text>
+                        <text class="tl" style="--d:4.52s" x="380" y="376" dy="1em">Primo</text>
+                        <!-- 5. el patrón: abuela, tía y madre, portadoras obligadas -->
+                        <circle class="tc" style="--d:4.8s" cx="420" cy="70" r="4.5" />
+                        <circle class="tc" style="--d:4.88s" cx="320" cy="210" r="4.5" />
+                        <circle class="tc" style="--d:4.96s" cx="600" cy="210" r="4.5" />
+                        <!-- 6. qué cambia: la hermana, a quien hay que asesorar -->
+                        <path class="tr tr--accent" pathLength="1" style="--d:5.28s;--t:0.6s" d="M600 324a26 26 0 1 1 0 52a26 26 0 1 1 0 -52" />
                     </svg>
+
+                    <div class="btn-row hero__cta">
+                        <a class="btn btn--primary" href="#caso">Ver cómo razono un caso</a>
+                        <a class="btn btn--ghost" href="#contacto">Escribime</a>
+                    </div>
 
                     <img class="hero__portrait" src="retrato.webp" width="600" height="800"
                         alt="Retrato de Alan Gómez Forero">
@@ -630,6 +649,19 @@
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') { close(); }
             });
+        }());
+
+        // Árbol del inicio: deja la escala del dibujo en --tree-scale para que la
+        // letra y los trazos se vean del mismo tamaño en cualquier ancho (como
+        // --ped-scale en el caso). Sin esto queda la escala de la pantalla ancha.
+        (function () {
+            var tree = document.querySelector('.hero__tree');
+            if (!tree || !window.ResizeObserver) { return; }
+            var vbw = tree.viewBox.baseVal.width;
+            new ResizeObserver(function () {
+                var w = tree.getBoundingClientRect().width;
+                if (w) { tree.style.setProperty('--tree-scale', String(w / vbw)); }
+            }).observe(tree);
         }());
     </script>
 </body>
