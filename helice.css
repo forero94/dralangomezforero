@@ -56,7 +56,7 @@
     letter-spacing: .04em;
     text-decoration: none;
     pointer-events: auto;
-    transition: transform .2s ease;
+    transition: transform var(--dur-quick) var(--ease-out);
 }
 
 .helix__seal:hover {

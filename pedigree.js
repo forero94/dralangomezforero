@@ -262,8 +262,15 @@
         if (w) { svg.style.setProperty('--ped-scale', String(w / v[2])); }
     }
 
+    // La misma curva que --ease-in-out del CSS
     function easeInOut(t) {
         return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    }
+
+    // La duración es --dur-slow, la misma del fundido de las personas: así el
+    // encuadre y lo que aparece terminan juntos.
+    function viewBoxDuration() {
+        return parseFloat(getComputedStyle(svg).getPropertyValue('--dur-slow')) || 500;
     }
 
     function setViewBox(target, animate) {
@@ -280,13 +287,14 @@
 
         var from = vbCurrent.slice();
         var start = null;
+        var dur = viewBoxDuration();
 
         function frame(ts) {
             if (start === null) { start = ts; }
-            var e = easeInOut(Math.min((ts - start) / 480, 1));
+            var e = easeInOut(Math.min((ts - start) / dur, 1));
             vbCurrent = from.map(function (f, idx) { return f + (target[idx] - f) * e; });
             applyViewBox(vbCurrent);
-            vbFrame = (ts - start) < 480 ? requestAnimationFrame(frame) : null;
+            vbFrame = (ts - start) < dur ? requestAnimationFrame(frame) : null;
         }
 
         vbFrame = requestAnimationFrame(frame);

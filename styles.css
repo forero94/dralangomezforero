@@ -34,6 +34,17 @@
 
     --measure: 68ch;
     --gutter: clamp(1.25rem, 5vw, 3rem);
+
+    /* Movimiento: tres duraciones y dos curvas para todo el sitio.
+       La de salida arranca rápido y se asienta despacio: es la de lo que
+       aparece o responde a un gesto. La de ida y vuelta acelera y frena
+       parejo: es la de lo que se traslada, como el encuadre del caso
+       (pedigree.js lee --dur-slow; va en ms). */
+    --ease-out: cubic-bezier(.22, 1, .36, 1);
+    --ease-in-out: cubic-bezier(.45, 0, .55, 1);
+    --dur-quick: 150ms;   /* respuesta a un gesto: hover, foco */
+    --dur-base: 300ms;    /* cambio de estado, cambio de página */
+    --dur-slow: 500ms;    /* algo que entra o se revela */
 }
 
 /* ---------- Tokens: tema oscuro por preferencia del sistema ---------- */
@@ -131,15 +142,31 @@ html { scroll-behavior: smooth; }
 /* Sin transiciones en vez de transiciones cortas: con duración, todo elemento
    transiciona cualquier propiedad (transition-property vale all por defecto) y
    lo que se mide justo después de cambiar una clase todavía no cambió.
-   Las animaciones corren una sola vez: infinitas y cortas, tiemblan. */
+   Las animaciones corren una sola vez: infinitas y cortas, tiemblan. Y sin
+   demora: con la demora intacta, lo que se dibuja por partes (el árbol del
+   inicio) quedaría invisible hasta que le toque. */
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after {
         animation-duration: .01ms !important;
+        animation-delay: 0s !important;
         animation-iteration-count: 1 !important;
         transition: none !important;
     }
 }
+
+/* Cambio de página: entre la home y el paisaje la página se funde en vez de
+   cortar. Tiene que estar en las dos puntas, por eso va acá y no en la home.
+   Donde el navegador no lo sabe hacer (Firefox, por ahora) navega como siempre. */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition { navigation: auto; }
+}
+
+::view-transition-old(root) { animation: var(--dur-quick) var(--ease-out) both vt-out; }
+::view-transition-new(root) { animation: var(--dur-base) var(--ease-out) both vt-in; }
+
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; translate: 0 .5rem; } }
 
 /* ---------- Layout ---------- */
 .wrap {
@@ -234,7 +261,7 @@ html { scroll-behavior: smooth; }
     background: transparent;
     color: var(--ink-soft);
     cursor: pointer;
-    transition: background .15s ease, color .15s ease;
+    transition: background var(--dur-quick) var(--ease-out), color var(--dur-quick) var(--ease-out);
 }
 
 .icon-btn:hover { background: var(--paper-sunken); color: var(--ink); }
@@ -291,11 +318,15 @@ html { scroll-behavior: smooth; }
 .hero { padding-block: clamp(3.5rem, 9vw, 6.5rem); }
 
 .hero__grid {
+    --hero-gap: clamp(2rem, 5vw, 4rem);
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: clamp(2rem, 5vw, 4rem);
+    grid-template-areas: "text portrait";
+    gap: var(--hero-gap);
     align-items: center;
 }
+
+.hero__text { grid-area: text; }
 
 .hero__byline {
     line-height: 1.4;
@@ -332,6 +363,7 @@ html { scroll-behavior: smooth; }
 /* La foto ya viene en 3:4, el mismo aspecto de la caja: no se recorta.
    Las esquinas son las de las tarjetas. */
 .hero__portrait {
+    grid-area: portrait;
     width: clamp(12rem, 24vw, 17rem);
     aspect-ratio: 3 / 4;
     object-fit: cover;
@@ -341,10 +373,74 @@ html { scroll-behavior: smooth; }
 }
 
 @media (max-width: 46rem) {
-    .hero__grid { grid-template-columns: 1fr; }
-    .hero__portrait { order: -1; width: 7.5rem; }
+    .hero__grid {
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-areas: "portrait tree" "text text";
+    }
+    .hero__portrait { width: 7.5rem; }
     .hero__sub { max-width: none; }
 }
+
+/* ---------- Árbol del inicio ---------- */
+/* Va donde hay lugar libre: en pantalla ancha, en la franja entre el texto y
+   la foto, a la altura del subtítulo y los botones (desde 62rem el texto ya
+   no cambia de ancho y la franja mide siempre lo mismo); en el celular, al
+   lado de la foto. En el medio no entra sin pisar el texto, y no está. */
+.hero__tree { display: none; }
+
+@media (min-width: 62rem) {
+    .hero__tree {
+        display: block;
+        grid-area: text;
+        justify-self: end;
+        align-self: end;
+        width: 9rem;
+        translate: calc(var(--hero-gap) / 2) 0;
+    }
+}
+
+@media (max-width: 46rem) {
+    .hero__tree {
+        display: block;
+        grid-area: tree;
+        justify-self: center;
+        width: min(9rem, 100%);
+    }
+}
+
+/* Los trazos: pathLength="1" en cada uno, así un mismo guion de largo 1 lo
+   cubre entero y correrlo de 1 a 0 lo dibuja de punta a punta. El grosor
+   está pensado para el ancho de 9rem: ahí da el 1,5px de los trazos del caso. */
+.hero__tree .tr {
+    fill: none;
+    stroke: var(--ped-line);
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    animation: tree-draw var(--t, .4s) var(--ease-out) var(--d, 0s) both;
+}
+
+/* rellenos de los afectados */
+.hero__tree .tf {
+    fill: var(--ped-fill);
+    animation: tree-ink var(--t, .3s) var(--ease-out) var(--d, 0s) both;
+}
+
+/* puntos de las portadoras */
+.hero__tree .tc {
+    fill: var(--ped-line);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: tree-dot var(--t, .35s) var(--ease-out) var(--d, 0s) both;
+}
+
+.hero__tree .tr--proband { stroke: var(--accent); }
+.hero__tree .tf--proband { fill: var(--accent); }
+
+@keyframes tree-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes tree-ink { from { opacity: 0; } }
+@keyframes tree-dot { from { opacity: 0; scale: 0; } }
 
 .btn-row { display: flex; flex-wrap: wrap; gap: .75rem; }
 
@@ -359,7 +455,8 @@ html { scroll-behavior: smooth; }
     text-decoration: none;
     border: 1px solid transparent;
     cursor: pointer;
-    transition: background .15s ease, border-color .15s ease, color .15s ease;
+    transition: background var(--dur-quick) var(--ease-out), border-color var(--dur-quick) var(--ease-out),
+        color var(--dur-quick) var(--ease-out);
 }
 
 .btn--primary { background: var(--accent); color: #fff; }
@@ -436,7 +533,7 @@ html { scroll-behavior: smooth; }
     flex: 1;
     background: var(--rule-strong);
     border-radius: 2px;
-    transition: background .3s ease;
+    transition: background var(--dur-base) var(--ease-out);
 }
 
 .case__progress li.is-done { background: var(--accent); }
@@ -544,7 +641,7 @@ html { scroll-behavior: smooth; }
 /* Aparición progresiva */
 .ped-node, .ped-line, .ped-carrier, .ped-proband-arrow, .ped-proband-arrow-head {
     opacity: 0;
-    transition: opacity .45s ease;
+    transition: opacity var(--dur-slow) var(--ease-out);
 }
 
 .ped-node.is-visible,
@@ -562,7 +659,7 @@ html { scroll-behavior: smooth; }
     stroke-width: 2;
     vector-effect: non-scaling-stroke;
     opacity: 0;
-    transition: opacity .45s ease;
+    transition: opacity var(--dur-slow) var(--ease-out);
 }
 
 .ped-highlight.is-visible { opacity: 1; }
@@ -747,7 +844,40 @@ html { scroll-behavior: smooth; }
     padding: .55rem 1rem;
     border-radius: .4rem;
     text-decoration: none;
-    transition: top .15s ease;
+    transition: top var(--dur-quick) var(--ease-out);
 }
 
 .skip-link:focus { top: .5rem; color: #fff; }
+
+/* ---------- Aparición al bajar ---------- */
+/* Lo que está más abajo sube y se aclara al entrar en pantalla. Lo maneja el
+   scroll, no un reloj: termina cuando el elemento ya subió un quinto de la
+   pantalla, todo lo que quedó arriba está entero y un enlace a #perfil llega
+   con la sección completa. Sin soporte (Firefox, por ahora), con movimiento
+   reducido o al imprimir, todo está quieto desde el principio.
+   El tablero del caso queda afuera: el JS lo mide. */
+@supports (animation-timeline: view()) {
+    @media screen and (prefers-reduced-motion: no-preference) {
+        .section__label,
+        .section__title,
+        .lead,
+        .case__thesis,
+        .genome__view,
+        .facts,
+        .cv__item,
+        .card {
+            animation: rise var(--ease-out) both;
+            animation-timeline: view();   /* después del atajo: animation lo resetea */
+            animation-range: cover 0% cover 20%;
+        }
+
+        /* las piezas de una misma fila, escalonadas */
+        .cv__item + .cv__item,
+        .card + .card { animation-range: cover 3% cover 23%; }
+
+        .cv__item + .cv__item + .cv__item,
+        .card + .card + .card { animation-range: cover 6% cover 26%; }
+    }
+}
+
+@keyframes rise { from { opacity: 0; translate: 0 1.5rem; } }

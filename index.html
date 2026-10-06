@@ -136,7 +136,7 @@
         <header class="hero">
             <div class="wrap">
                 <div class="hero__grid">
-                    <div>
+                    <div class="hero__text">
                         <p class="hero__byline">
                             <span class="hero__name">Dr. Alan Gómez Forero</span>
                             <span class="hero__role">Residente de Genética Médica · CNGM</span>
@@ -151,6 +151,39 @@
                             <a class="btn btn--ghost" href="#contacto">Escribime</a>
                         </div>
                     </div>
+                    <!-- La familia del caso en miniatura. Se dibuja sola en el orden de los
+                         pasos: el motivo de consulta, la hermana, la pregunta hacia arriba que
+                         encuentra al tío, las portadoras y al final la flecha del paciente.
+                         Cada trazo arranca donde lo dejó el anterior; --d es cuándo empieza y
+                         --t cuánto tarda. Sin animación se ve entero. -->
+                    <svg class="hero__tree" viewBox="17 13 250 239" aria-hidden="true" focusable="false">
+                        <!-- motivo de consulta: los padres y el paciente -->
+                        <path class="tr" pathLength="1" style="--d:.2s" d="M170 107a13 13 0 1 1 0 26a13 13 0 1 1 0-26" />
+                        <path class="tr" pathLength="1" style="--d:.3s" d="M237 120v-13h26v26h-26z" />
+                        <path class="tr" pathLength="1" style="--d:.55s;--t:.25s" d="M183 120H237" />
+                        <path class="tr" pathLength="1" style="--d:.75s;--t:.35s" d="M210 120V170H250V197" />
+                        <rect class="tf" style="--d:1.2s" x="237" y="197" width="26" height="26" />
+                        <path class="tr" pathLength="1" style="--d:.95s" d="M250 197h13v26h-26v-26z" />
+                        <!-- la hermana -->
+                        <path class="tr" pathLength="1" style="--d:1.15s;--t:.3s" d="M210 170H170V197" />
+                        <path class="tr" pathLength="1" style="--d:1.35s" d="M170 197a13 13 0 1 1 0 26a13 13 0 1 1 0-26" />
+                        <!-- la pregunta por la rama materna: los abuelos y el tío -->
+                        <path class="tr" pathLength="1" style="--d:1.65s;--t:.45s" d="M170 107V80H110V30" />
+                        <path class="tr" pathLength="1" style="--d:2s;--t:.2s" d="M83 30H137" />
+                        <path class="tr" pathLength="1" style="--d:2.05s" d="M83 30v13h-26v-26h26z" />
+                        <path class="tr" pathLength="1" style="--d:2.05s" d="M137 30a13 13 0 1 1 26 0a13 13 0 1 1-26 0" />
+                        <path class="tr" pathLength="1" style="--d:2.1s;--t:.35s" d="M110 80H40V107" />
+                        <rect class="tf" style="--d:2.65s" x="27" y="107" width="26" height="26" />
+                        <path class="tr" pathLength="1" style="--d:2.4s" d="M40 107h13v26h-26v-26z" />
+                        <path class="tr" pathLength="1" style="--d:2.75s;--t:.25s" d="M21 139L59 101" />
+                        <!-- el patrón: abuela y madre, portadoras obligadas -->
+                        <circle class="tc" style="--d:3s" cx="150" cy="30" r="4" />
+                        <circle class="tc" style="--d:3.1s" cx="170" cy="120" r="4" />
+                        <!-- el paciente que consulta -->
+                        <path class="tr tr--proband" pathLength="1" style="--d:3.35s;--t:.3s" d="M212 248L228.3 231.7" />
+                        <path class="tf tf--proband" style="--d:3.55s;--t:.2s" d="M234 226L231.5 234.8L225.2 228.5z" />
+                    </svg>
+
                     <img class="hero__portrait" src="retrato.webp" width="600" height="800"
                         alt="Retrato de Alan Gómez Forero">
                 </div>
