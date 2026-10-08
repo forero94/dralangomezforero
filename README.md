@@ -14,6 +14,7 @@ Está dirigido a colegas, empleadores y potenciales colaboradores. No es un siti
 | `arbol/` | Constructor de árboles familiares. Compilado: la fuente está en `forero94/pedigree` |
 | `genoma/` | Paisaje del genoma: el genoma de referencia pintado como un rollo de tinta |
 | `helice.js`, `helice.css` | Hebra de tinta: la doble hebra del paisaje, de pie en el margen de la home |
+| `ecosistema.js`, `ecosistema.css` | Ecosistema: lo que vive en un núcleo, pintado detrás de toda la home |
 | `og.jpg` | Preview para redes (1200×630) |
 | `CNAME` | Dominio: `alangomezforero.com.ar` |
 
@@ -48,7 +49,7 @@ python -m http.server 8000
 ```
 
 GitHub Pages deja que el navegador guarde el CSS y el JS 10 minutos. Por eso `index.html` los enlaza con
-`?v=N`: al cambiar `styles.css`, `helice.css` o `helice.js`, subir ese número. Si no, quien vuelva al
+`?v=N`: al cambiar `styles.css`, `helice.css`, `helice.js`, `ecosistema.css` o `ecosistema.js`, subir ese número. Si no, quien vuelva al
 sitio ve un rato el HTML nuevo con los estilos viejos.
 
 ## El árbol del inicio y el caso
@@ -84,3 +85,35 @@ habitantes de `genoma/landscape.js`, así que un cambio allá no le llega solo. 
 ancho, donde el margen alcanza.
 
 > Es una representación didáctica, no a escala.
+
+## El ecosistema
+
+Detrás de toda la home, con la misma tinta del paisaje, vive lo que hay en un núcleo. Son tres planos
+que el scroll mueve a distinta velocidad:
+
+- **Al fondo:** aguadas y cromosomas en metafase con sus bandas G reales (UCSC, GRCh38, copiadas de
+  `genoma/genome-data.js`).
+- **En el medio:** tramos sueltos de doble hebra con nucleosomas, polimerasas que sueltan su ARN,
+  árboles de Miller, proteínas y un polvo de moléculas.
+- **Adelante:** polisomas, proteínas y alguna polimerasa.
+
+Mientras se lee «El caso», que es ligado al X, pasa un cromosoma X por el margen izquierdo. Detrás de
+la columna del texto hay menos y más tenue. Los polisomas, que son lo más grande, van solo en los
+márgenes cuando los hay, y el margen derecho es de la hebra. El fondo entra cuando el árbol del inicio
+termina de dibujarse.
+
+Como `helice.js`, copia el pincel y los habitantes del paisaje: un cambio allá no le llega solo.
+
+**Cómo se pinta.** El mundo se arma por celdas, cada una con su semilla, y se calcula entero de
+antemano en los ratos libres del navegador. Cada celda se pinta una sola vez en su propio lienzo; al
+bajar no se repinta nada, solo se corren los planos. En Chrome y Safari eso lo hace el navegador con
+una animación atada al scroll; en Firefox, el script. Las aguadas son elementos con degradado CSS, no
+trazos en el lienzo. Con movimiento reducido los planos quedan quietos.
+
+**Para ajustarlo.** La cantidad está en `planFar`, `planMid` y `planNear` (`ecosistema.js`): cuántos
+lugares por ancho y la probabilidad de que cada uno se llene. La intensidad está en `--eco-far`,
+`--eco-mid` y `--eco-near`, y detrás del texto en `--eco-col` (`ecosistema.css`).
+
+«El caso» y «Contacto» dejan ver el fondo porque su papel hundido es translúcido. `--eco-sunken` está
+calculado para que sobre papel liso dé exactamente `--paper-sunken`: si cambia alguno de los dos
+colores, hay que recalcularlo.

@@ -1,0 +1,110 @@
+/* ============================================================
+   Ecosistema — detrás de toda la home (ecosistema.js).
+   Tres planos, cada uno con un lienzo por celda del mundo. Cada
+   plano se pinta con toda la tinta y su opacidad lo apaga: así lo
+   de un plano tapa lo de atrás sin transparentarse por dentro.
+   Al bajar no se repinta nada: el scroll corre los planos.
+   ============================================================ */
+
+:root {
+    --eco-far: .55;
+    --eco-mid: .58;
+    --eco-near: .50;
+    --eco-col: .32;            /* cuánto queda detrás de la columna del texto */
+
+    /* El papel hundido de «El caso» y «Contacto», translúcido: sobre papel liso da
+       exactamente --paper-sunken, y deja ver el ecosistema al 40%. */
+    --eco-sunken: rgb(238 235 229 / .6);
+}
+
+/* sin márgenes, toda la pantalla es columna: un poco más de tinta */
+@media (max-width: 62rem) {
+    :root { --eco-col: .45; }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --eco-far: .45;
+        --eco-mid: .42;
+        --eco-near: .36;
+        --eco-sunken: rgb(13 12 8 / .6);
+    }
+}
+
+:root[data-theme="dark"] {
+    --eco-far: .45;
+    --eco-mid: .42;
+    --eco-near: .36;
+    --eco-sunken: rgb(13 12 8 / .6);
+}
+
+.eco {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100lvh;            /* que no cambie de alto cuando el celular esconde la barra */
+    pointer-events: none;
+    overflow: hidden;
+    contain: strict;
+    opacity: 0;
+    transition: opacity 2.4s var(--ease-out);
+    /* El texto manda: en la columna del contenido (62rem) el fondo baja; en los
+       márgenes va entero. En el celular todo es columna. */
+    -webkit-mask-image: linear-gradient(to right,
+        #000 calc(50% - 35rem), rgb(0 0 0 / var(--eco-col)) calc(50% - 29rem),
+        rgb(0 0 0 / var(--eco-col)) calc(50% + 29rem), #000 calc(50% + 35rem));
+    mask-image: linear-gradient(to right,
+        #000 calc(50% - 35rem), rgb(0 0 0 / var(--eco-col)) calc(50% - 29rem),
+        rgb(0 0 0 / var(--eco-col)) calc(50% + 29rem), #000 calc(50% + 35rem));
+}
+
+.eco.is-on { opacity: 1; }
+
+.eco__layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    will-change: transform;
+}
+
+.eco__layer canvas {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    display: block;
+}
+
+.eco__wash { position: absolute; }
+
+.eco__layer:nth-child(1) { opacity: var(--eco-far); }
+.eco__layer:nth-child(2) { opacity: var(--eco-mid); }
+.eco__layer:nth-child(3) { opacity: var(--eco-near); }
+
+/* Cada plano baja --speed por cada píxel de scroll. Donde el navegador sabe atar
+   una animación al scroll, la corre él, sin esperar al script: --eco-max es el
+   recorrido entero (lo deja ecosistema.js). Si no, el script mueve los planos. */
+@supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .eco__layer {
+            animation: eco-shift linear both;
+            animation-timeline: scroll(root);
+        }
+    }
+}
+
+@keyframes eco-shift {
+    to { transform: translate3d(0, calc(var(--speed) * var(--eco-max, 0px) * -1), 0); }
+}
+
+@media print {
+    .eco { display: none; }
+}
+
+/* ---------- Lo que tenía fondo propio ---------- */
+
+.case,
+.contact { background: var(--eco-sunken); }
