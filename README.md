@@ -76,14 +76,11 @@ semilla, así que el dibujo es el mismo sin importar por dónde se llegue.
 `genoma/genome-data.js` está en el repo y se publica tal cual. Para regenerarlo con una versión nueva
 de GENCODE, ver las instrucciones al principio de `genoma/build_data.py`.
 
-La home lo presenta con una captura del propio paisaje, una por tema: `genoma/vista-xq28-claro.webp` y
-`genoma/vista-xq28-oscuro.webp`. Se sacaron en `genoma/?semilla=tinta#chrX:149270000`, sin el grano del
-papel, y están en WebP sin pérdida para que su papel sea exactamente el de la página. Si cambia el
-dibujo o la paleta, hay que volver a sacarlas: exportar en PNG desde esa dirección y recortar.
+Desde la home se llega por el menú y por el sello de la hebra.
 
 `helice.js` pone la doble hebra de pie en el margen derecho de la home, pintada con más libertad que
 exactitud: no sale de ningún cromosoma. El scroll la recorre de punta a punta. Copia el pincel y los
 habitantes de `genoma/landscape.js`, así que un cambio allá no le llega solo. Aparece desde 81rem de
-ancho, donde el margen alcanza; el tablero del caso y la captura del genoma terminan justo donde empieza.
+ancho, donde el margen alcanza.
 
 > Es una representación didáctica, no a escala.

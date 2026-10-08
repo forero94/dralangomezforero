@@ -38,7 +38,7 @@
         rel="stylesheet">
     <!-- ?v=: GitHub Pages deja que el navegador guarde CSS y JS 10 minutos. Al cambiarlos,
          subir el número: si no, el HTML nuevo se ve un rato con los estilos viejos. -->
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=3">
     <link rel="stylesheet" href="helice.css?v=2">
 
     <script type="application/ld+json">
@@ -93,7 +93,7 @@
                     <div class="nav__links">
                         <a href="#caso">Caso</a>
                         <a href="arbol/">Árbol familiar</a>
-                        <a href="#genoma">Genoma</a>
+                        <a href="genoma/">Genoma</a>
                         <a href="#perfil">Perfil</a>
                         <a href="#desarrollos">Desarrollos</a>
                         <a href="#contacto">Contacto</a>
@@ -124,7 +124,7 @@
             <div class="nav__mobile" id="nav-mobile">
                 <a href="#caso">Caso</a>
                 <a href="arbol/">Árbol familiar</a>
-                <a href="#genoma">Genoma</a>
+                <a href="genoma/">Genoma</a>
                 <a href="#perfil">Perfil</a>
                 <a href="#desarrollos">Desarrollos</a>
                 <a href="#contacto">Contacto</a>
@@ -321,48 +321,6 @@
                     Armé una herramienta para dibujar árboles familiares con esta misma notación.
                     Es gratuita, funciona entera en tu navegador y podés exportar el resultado:
                     <a href="arbol/">probala acá</a>.
-                </p>
-            </div>
-        </section>
-
-        <!-- ============ Paisaje del genoma ============ -->
-        <section class="section section--feature" id="genoma">
-            <div class="wrap">
-                <p class="section__label">Paisaje del genoma</p>
-                <h2 class="section__title">El genoma humano, pintado como un rollo de tinta</h2>
-                <p class="lead">
-                    Cada árbol es un gen codificante plantado en su coordenada, las montañas se levantan donde
-                    los genes se amontonan y abajo corre el cromosoma con sus bandas. Se recorre de punta a
-                    punta, del cromosoma 1 al Y, y se puede buscar un gen, una banda o una coordenada.
-                </p>
-            </div>
-
-            <!-- Captura del mismo paisaje, una por tema: se descarga solo la visible.
-                 El enlace abre el paisaje en ese lugar y con ese trazo. Sale del ancho
-                 del texto. -->
-            <div class="wrap wrap--wide">
-                <a class="genome__view" href="genoma/?semilla=tinta#chrX:149270000">
-                    <img class="genome__img genome__img--light" src="genoma/vista-xq28-claro.webp"
-                        width="1819" height="781" loading="lazy" decoding="async"
-                        alt="El final del cromosoma X en el paisaje: la doble hebra termina en el telómero y sobre Xq28, denso en genes, se levanta la montaña más alta. Abre el paisaje en ese lugar.">
-                    <img class="genome__img genome__img--dark" src="genoma/vista-xq28-oscuro.webp"
-                        width="1819" height="781" loading="lazy" decoding="async"
-                        alt="El final del cromosoma X en el paisaje: la doble hebra termina en el telómero y sobre Xq28, denso en genes, se levanta la montaña más alta. Abre el paisaje en ese lugar.">
-                </a>
-            </div>
-
-            <div class="wrap">
-                <p class="genome__caption">
-                    Xq27–q28, el final del cromosoma X. Los pabellones marcan <em>FMR1</em>, <em>MECP2</em> y
-                    <em>F8</em>, tres genes de herencia ligada al X.
-                </p>
-
-                <div class="btn-row">
-                    <a class="btn btn--primary" href="genoma/">Recorrer el genoma →</a>
-                </div>
-                <p class="note">
-                    Genes de GENCODE y bandas citogenéticas de UCSC, sobre GRCh38. Es una representación
-                    didáctica, no a escala.
                 </p>
             </div>
         </section>

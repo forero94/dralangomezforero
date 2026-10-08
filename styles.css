@@ -169,12 +169,6 @@ html { scroll-behavior: smooth; }
 
 .wrap--narrow { max-width: 46rem; }
 
-/* Para piezas que salen del ancho del texto, como la captura del genoma. Con
-   los mismos márgenes laterales: en pantallas chicas no cambia nada.
-   Salen 3rem por lado, lo justo para terminar donde empieza la hebra de tinta
-   del margen (helice.css): si se ensancha, se le montan encima. */
-.wrap--wide { max-width: 68rem; }
-
 .section { padding-block: clamp(4rem, 10vw, 7rem); }
 .section + .section { border-top: 1px solid var(--rule); }
 
@@ -192,7 +186,7 @@ html { scroll-behavior: smooth; }
     margin-bottom: 1.5rem;
 }
 
-/* Las dos piezas principales, el caso y el genoma, pesan más que el resto */
+/* La pieza principal, el caso, pesa más que el resto */
 .section--feature .section__title { font-size: clamp(2rem, 5vw, 3rem); }
 
 .lead {
@@ -540,35 +534,6 @@ html { scroll-behavior: smooth; }
     padding-left: 1.25rem;
 }
 
-/* ---------- Paisaje del genoma ---------- */
-/* La captura tiene el mismo papel que la página: va sin marco, y con los
-   costados esfumados para que el rollo parezca seguir de largo. */
-.genome__view { display: block; margin-top: 2.5rem; }
-
-.genome__img {
-    width: 100%;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
-}
-
-/* Una captura por tema, con la misma lógica que los íconos del toggle */
-.genome__img--dark { display: none; }
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .genome__img--light { display: none; }
-    :root:not([data-theme="light"]) .genome__img--dark { display: block; }
-}
-
-:root[data-theme="dark"] .genome__img--light { display: none; }
-:root[data-theme="dark"] .genome__img--dark { display: block; }
-
-.genome__caption {
-    margin: .75rem 0 2rem;
-    font-size: .88rem;
-    color: var(--ink-muted);
-    max-width: var(--measure);
-}
-
 /* ---------- Tarjetas de desarrollo ---------- */
 .cards {
     display: grid;
@@ -737,7 +702,6 @@ html { scroll-behavior: smooth; }
         .section__title,
         .lead,
         .case__thesis,
-        .genome__view,
         .facts,
         .reasoning__step,
         .cv__item,
